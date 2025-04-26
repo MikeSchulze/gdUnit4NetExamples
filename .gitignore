@@ -5,6 +5,7 @@
 .import/
 export.cfg
 export_credentials.cfg
+*.uid
 
 # Imported translations (automatically generated from CSV files)
 *.translation
@@ -13,3 +14,13 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+
+obj/
+bin/
+nupkg/*
+.generated/
+*.*.import
+TestResults/
+gdunit4_testadapter/
+**GdUnitRunner_*.cfg
