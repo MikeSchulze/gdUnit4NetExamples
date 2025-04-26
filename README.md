@@ -139,7 +139,7 @@ To work with this project, you'll need:
 3. **Configure Test Runner Settings**
     - From the test explorer, click the settings gear icon (⚙️)
     - Select "Unit Testing Settings..." from the dropdown menu
-      ![Rider Test Explorer Settings](./assets/rider-test-settings1.png)
+      ![Rider Test Explorer Settings](https://github.com/MikeSchulze/gdUnit4NetExamples/blob/master/assets/rider-test-settings1.png)
 
 
 4. **Set Up .runsettings File**
