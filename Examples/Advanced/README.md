@@ -13,7 +13,7 @@ Before diving into advanced examples, ensure you understand:
 ## Getting Started with Advanced Topics
 
 **Ready for more complex testing?** Explore in this order:
-1. [Configuration Management](Setup/TestWithRunsettings/) - Professional test configuration
+1. [Configuration Management](Setup/TestWithRunnsettings/README.md) - Professional test configuration
 2. [Complex Test Scenarios](Tests/) - Advanced testing patterns and techniques
 
 ## Advanced Topics Structure
