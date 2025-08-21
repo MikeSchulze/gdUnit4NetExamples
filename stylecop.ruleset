@@ -15,7 +15,7 @@
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
     <Rule Id="IDE0011" Action="None"/> <!-- Disable Add braces to 'if' statement -->
   </Rules>
-  <Rules AnalyzerId="Godot" RuleNamespace="GdUnit4.Test">
+  <Rules AnalyzerId="Godot" RuleNamespace="GdUnit4.Examples">
     <Rule Id="CA2000" Action="None"/> <!-- Disable Dispose objects before losing scope -->
   </Rules>
 </RuleSet>

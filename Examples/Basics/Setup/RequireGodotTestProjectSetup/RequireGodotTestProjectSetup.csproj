@@ -15,7 +15,7 @@
     <Nullable>enable</Nullable>
     <!-- Prevents this project from being packaged as a NuGet package -->
     <IsPackable>false</IsPackable>
-    <RootNamespace>GdUnit4.Test</RootNamespace>
+    <RootNamespace>GdUnit4.Examples.Basics.Setup</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
