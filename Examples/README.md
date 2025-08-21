@@ -15,17 +15,18 @@ Welcome to the gdUnit4Net examples! This section contains hands-on examples and 
 The examples are organized into the following structure:
 
 ```
-├── Basics/             # Beginner examples and tutorials
-│   ├── Setup/          # Project setup examples
-│   │   ├── MinimalTestProjectSetup/         # Minimal testing project
-│   │   └── RequireGodotTestProjectSetup/    # Minmal require Godot runtime testing project
-│   └── UnitTesting/    # Basic unit test patterns and techniques
-├── Advanced/           # Advanced testing examples
-│   ├── Setup/          # Advanced project configurations
-│   └── Tests/          # Complex testing scenarios
-├── Demos/              # Complete demo projects
-│   ├── 2DMenuDemo/     # 2D menu testing demo
-│   └── 3DRoomDemo/     # 3D room testing demo
+├── Basics/                   # Beginner examples and tutorials
+│   ├── Setup/                # Project setup examples
+│   │   ├── MinimalTestProjectSetup/       # Minimal testing project
+│   │   └── RequireGodotTestProjectSetup/  # Minmal require Godot runtime testing project
+│   └── UnitTesting/          # Basic unit test patterns and techniques
+├── Advanced/                 # Advanced testing examples
+│   ├── Setup/                # Advanced project configurations
+│   ├── UnitTesting/          # Complex testing scenarios
+│   └── IntegrationTesting/   # Integration testing scenarios
+├── Demos/                    # Complete demo projects
+│   ├── 2DMenuDemo/           # 2D menu testing demo
+│   └── 3DRoomDemo/           # 3D room testing demo
 ```
 
 ## What Each Section Contains
@@ -98,4 +99,3 @@ After running the examples:
 - Explore the [detailed documentation](../docs/) for in-depth guides
 - Check out the [gdUnit4Net API documentation](https://github.com/MikeSchulze/gdUnit4Net)
 - Try creating your own tests based on the patterns you've learned
-
