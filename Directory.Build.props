@@ -15,14 +15,15 @@
     <!-- Enable built-in .NET code analyzers -->
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
 
-    <!-- Use the latest analysis rules -->
-    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisLevel>8.0</AnalysisLevel>
 
     <!-- Enable all categories of analysis rules (Style, Design, Documentation, etc.) -->
     <AnalysisMode>All</AnalysisMode>
 
     <!-- Enforce code style rules during build, not just in the IDE -->
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)stylecop.ruleset</CodeAnalysisRuleSet>
 
     <!-- Convert all warnings to errors for stricter enforcement -->
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -44,18 +45,10 @@
     StyleCop.Analyzers: Enforces style and consistency rules
     Helps ensure readable and maintainable code across the codebase
     -->
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.507">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-
-    <!--
-    Microsoft.CodeAnalysis.NetAnalyzers: Microsoft's core .NET analyzers
-    Provides rules for correctness, performance, security, and more
-    -->
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    
   </ItemGroup>
 </Project>

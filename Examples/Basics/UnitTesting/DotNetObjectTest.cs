@@ -1,4 +1,4 @@
-﻿namespace GdUnit4Net.Examples;
+namespace GdUnit4Net.Examples;
 
 using System.Numerics;
 
@@ -37,6 +37,6 @@ public class DotNetObjectTest
     ///     gdUnit4Net's assertion framework.
     /// </summary>
     [TestCase]
-    public void CompareGodotString() => AssertThat("This is a test message")
+    public void CompareString() => AssertThat("This is a test message")
         .IsEqual("This is a test message");
 }

@@ -23,8 +23,6 @@ max_line_length = 180
 roslynator_max_line_length = max_line_length
 resharper_wrap_lines = true
 resharper_hard_wrap_line_length = max_line_length
-
-# Code style rules for line breaks
 csharp_max_line_length = max_line_length
 
 ##########################################
@@ -89,90 +87,141 @@ dotnet_analyzer_diagnostic.severity = warning
 # https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/language-rules#net-style-rules
 [*.{cs,csx,cake,vb,vbx}]
 # "this." and "Me." qualifiers
-dotnet_style_qualification_for_field = true:warning
-dotnet_style_qualification_for_property = true:warning
-dotnet_style_qualification_for_method = true:warning
-dotnet_style_qualification_for_event = true:warning
+dotnet_style_qualification_for_field = true : warning
+dotnet_style_qualification_for_property = true : warning
+dotnet_style_qualification_for_method = true : warning
+dotnet_style_qualification_for_event = true : warning
+
+# Format document on save - for JetBrains Rider
+resharper_apply_on_save = true
+
+
+# Member ordering
+resharper_member_order = accessibility, kind
+resharper_member_modifier_order = internal static, protected static, private static, static, internal, protected, private
+resharper_kind_order = constant, field, constructor, destructor, delegate, event, enum, interface, property, indexer, operator, method, struct, class
+resharper_accessibility_order = public, internal, protected, private
+
+resharper_arrange_member_access_first = true
+resharper_arrange_static_member_qualifier = true
+resharper_arrange_type_member_modifiers = true
+resharper_arrange_type_modifiers = true
+
+# Force member reordering to be active
+resharper_member_reordering_patterns = true
+
+# Make sure ReSharper member ordering is enabled
+resharper_apply_member_ordering_pattern = true
+
+# Sort using directives
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
+
+
 # Language keywords instead of framework type names for type references
-dotnet_style_predefined_type_for_locals_parameters_members = true:warning
-dotnet_style_predefined_type_for_member_access = true:warning
+dotnet_style_predefined_type_for_locals_parameters_members = true : warning
+dotnet_style_predefined_type_for_member_access = true : warning
 # Modifier preferences
-dotnet_style_require_accessibility_modifiers = always:warning
-csharp_preferred_modifier_order = public, private, protected, internal, static, extern, new, virtual, abstract, sealed, override, readonly, unsafe, volatile, async:warning
-visual_basic_preferred_modifier_order = Partial, Default, Private, Protected, Public, Friend, NotOverridable, Overridable, MustOverride, Overloads, Overrides, MustInherit, NotInheritable, Static, Shared, Shadows, ReadOnly, WriteOnly, Dim, Const, WithEvents, Widening, Narrowing, Custom, Async:warning
-dotnet_style_readonly_field = true:warning
+dotnet_style_require_accessibility_modifiers = always : warning
+csharp_preferred_modifier_order = public, private, protected, internal, required, static, extern, new, virtual, abstract, sealed, override, readonly, unsafe, volatile, async : warning
+visual_basic_preferred_modifier_order = Partial, Default, Private, Protected, Public, Friend, NotOverridable, Overridable, MustOverride, Overloads, Overrides, MustInherit, NotInheritable, Static, Shared, Shadows, ReadOnly, WriteOnly, Dim, Const, WithEvents, Widening, Narrowing, Custom, Async : warning
+dotnet_style_readonly_field = true : warning
 # Parentheses preferences
-dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:warning
-dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:warning
-dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:warning
-dotnet_style_parentheses_in_other_operators = never_if_unnecessary:warning
+dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity : warning
+dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity : warning
+dotnet_style_parentheses_in_other_binary_operators = always_for_clarity : warning
+dotnet_style_parentheses_in_other_operators = never_if_unnecessary : warning
 # Expression-level preferences
-dotnet_style_object_initializer = true:warning
-dotnet_style_collection_initializer = true:warning
-dotnet_style_explicit_tuple_names = true:warning
-dotnet_style_prefer_inferred_tuple_names = true:warning
-dotnet_style_prefer_inferred_anonymous_type_member_names = true:warning
-dotnet_style_prefer_auto_properties = true:warning
-dotnet_style_prefer_conditional_expression_over_assignment = false:suggestion
+dotnet_style_object_initializer = true : warning
+dotnet_style_collection_initializer = true : warning
+dotnet_style_explicit_tuple_names = true : warning
+dotnet_style_prefer_inferred_tuple_names = true : warning
+dotnet_style_prefer_inferred_anonymous_type_member_names = true : warning
+dotnet_style_prefer_auto_properties = true : warning
+dotnet_style_prefer_conditional_expression_over_assignment = false : suggestion
 dotnet_diagnostic.IDE0045.severity = suggestion
-dotnet_style_prefer_conditional_expression_over_return = false:suggestion
+dotnet_style_prefer_conditional_expression_over_return = false : suggestion
 dotnet_diagnostic.IDE0046.severity = suggestion
-dotnet_style_prefer_compound_assignment = true:warning
-dotnet_style_prefer_simplified_interpolation = true:warning
-dotnet_style_prefer_simplified_boolean_expressions = true:warning
+dotnet_style_prefer_compound_assignment = true : warning
+dotnet_style_prefer_simplified_interpolation = true : warning
+dotnet_style_prefer_simplified_boolean_expressions = true : warning
 # Null-checking preferences
-dotnet_style_coalesce_expression = true:warning
-dotnet_style_null_propagation = true:warning
-dotnet_style_prefer_is_null_check_over_reference_equality_method = true:warning
+dotnet_style_coalesce_expression = true : warning
+dotnet_style_null_propagation = true : warning
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true : warning
 # File header preferences
 # file_header_template = <copyright file="{fileName}" company="PROJECT-AUTHOR">\n© PROJECT-AUTHOR\n</copyright>
 # If you use StyleCop, you'll need to disable SA1636: File header copyright text should match.
 dotnet_diagnostic.SA1633.severity = none
-# Undocumented
-dotnet_style_operator_placement_when_wrapping = end_of_line:warning
-csharp_style_prefer_null_check_over_type_check = true:warning
+
+# Set C# new line preferences
+# Controls placement of binary operators when wrapping expressions
+# Place operators at the beginning of the line (Rider/ReSharper specific setting)
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+csharp_new_line_before_binary_operators = false
 
 # C# Style Rules
 # https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/language-rules#c-style-rules
 [*.{cs,csx,cake}]
 # 'var' preferences
-csharp_style_var_for_built_in_types = true:warning
-csharp_style_var_when_type_is_apparent = true:warning
-csharp_style_var_elsewhere = true:warning
+csharp_style_var_for_built_in_types = true : warning
+csharp_style_var_when_type_is_apparent = true : warning
+csharp_style_var_elsewhere = true : warning
 # Expression-bodied members
-csharp_style_expression_bodied_methods = true:warning
-csharp_style_expression_bodied_constructors = true:warning
-csharp_style_expression_bodied_operators = true:warning
-csharp_style_expression_bodied_properties = true:warning
-csharp_style_expression_bodied_indexers = true:warning
-csharp_style_expression_bodied_accessors = true:warning
-csharp_style_expression_bodied_lambdas = true:warning
-csharp_style_expression_bodied_local_functions = true:warning
+csharp_style_expression_bodied_methods = true : warning
+csharp_style_expression_bodied_constructors = true : warning
+csharp_style_expression_bodied_operators = true : warning
+csharp_style_expression_bodied_properties = true : warning
+csharp_style_expression_bodied_indexers = true : warning
+csharp_style_expression_bodied_accessors = true : warning
+csharp_style_expression_bodied_lambdas = true : warning
+csharp_style_expression_bodied_local_functions = true : warning
 # Pattern matching preferences
-csharp_style_pattern_matching_over_is_with_cast_check = true:warning
-csharp_style_pattern_matching_over_as_with_null_check = true:warning
-csharp_style_prefer_switch_expression = true:warning
-csharp_style_prefer_pattern_matching = true:warning
-csharp_style_prefer_not_pattern = true:warning
+csharp_style_pattern_matching_over_is_with_cast_check = true : warning
+csharp_style_pattern_matching_over_as_with_null_check = true : warning
+csharp_style_prefer_switch_expression = true : warning
+csharp_style_prefer_pattern_matching = true : warning
+csharp_style_prefer_not_pattern = true : warning
 # Expression-level preferences
-csharp_style_inlined_variable_declaration = true:warning
-csharp_prefer_simple_default_expression = true:warning
-csharp_style_pattern_local_over_anonymous_function = true:warning
-csharp_style_deconstructed_variable_declaration = true:warning
-csharp_style_prefer_index_operator = true:warning
-csharp_style_prefer_range_operator = true:warning
-csharp_style_implicit_object_creation_when_type_is_apparent = true:warning
+csharp_style_inlined_variable_declaration = true : warning
+csharp_prefer_simple_default_expression = true : warning
+csharp_style_pattern_local_over_anonymous_function = true : warning
+csharp_style_deconstructed_variable_declaration = true : warning
+csharp_style_prefer_index_operator = true : warning
+csharp_style_prefer_range_operator = true : warning
+csharp_style_implicit_object_creation_when_type_is_apparent = true : warning
 # "Null" checking preferences
-csharp_style_throw_expression = true:warning
-csharp_style_conditional_delegate_call = true:warning
+csharp_style_throw_expression = true : warning
+csharp_style_conditional_delegate_call = true : warning
+# Enforce attributes on separate lines
+dotnet_diagnostic.SA1134.severity = warning
+# Alternative: Use IDE rules for attribute placement
+csharp_style_prefer_attributes_on_same_line = false
+dotnet_diagnostic.IDE0055.severity = warning
+
+# ReSharper/Rider specific settings for attribute placement
+resharper_place_attribute_on_same_line = false
+resharper_place_simple_attribute_on_same_line = false
+resharper_place_type_attribute_on_same_line = false
+resharper_place_method_attribute_on_same_line = false
+resharper_place_accessor_attribute_on_same_line = false
+resharper_place_field_attribute_on_same_line = false
+# Don't require localization for string literals
+dotnet_diagnostic.CA1303.severity = none
+
 # Code block preferences
-csharp_prefer_braces = true:warning
-csharp_prefer_simple_using_statement = true:suggestion
+csharp_prefer_braces = when_multiline : warning
+csharp_prefer_simple_using_statement = true : suggestion
 dotnet_diagnostic.IDE0063.severity = suggestion
 # 'using' directive preferences
-csharp_using_directive_placement = inside_namespace:warning
+csharp_using_directive_placement = inside_namespace : warning
 # Modifier preferences
-csharp_prefer_static_local_function = true:warning
+csharp_prefer_static_local_function = true : warning
+# Disable StyleCop rule for requiring braces for single-line statements
+dotnet_diagnostic.SA1503.severity = none
+resharper_redundant_block_braces_highlighting = do_not_show
+resharper_redundant_empty_declaration_highlighting = do_not_show
+resharper_remove_redundant_braces_highlighting = do_not_show
 
 ##########################################
 # Unnecessary Code Rules
@@ -181,14 +230,14 @@ csharp_prefer_static_local_function = true:warning
 
 # .NET Unnecessary code rules
 [*.{cs,csx,cake,vb,vbx}]
-dotnet_code_quality_unused_parameters = all:warning
-dotnet_remove_unnecessary_suppression_exclusions = none:warning
+dotnet_code_quality_unused_parameters = all : warning
+dotnet_remove_unnecessary_suppression_exclusions = none : warning
 
 # C# Unnecessary code rules
 [*.{cs,csx,cake}]
-csharp_style_unused_value_expression_statement_preference = discard_variable:suggestion
+csharp_style_unused_value_expression_statement_preference = discard_variable : suggestion
 dotnet_diagnostic.IDE0058.severity = suggestion
-csharp_style_unused_value_assignment_preference = discard_variable:suggestion
+csharp_style_unused_value_assignment_preference = discard_variable : suggestion
 dotnet_diagnostic.IDE0059.severity = suggestion
 
 
@@ -209,9 +258,8 @@ dotnet_diagnostic.CA1515.severity = none
 [*.{cs,csx,cake,vb,vbx}]
 # Organize using directives
 dotnet_sort_system_directives_first = true
-dotnet_separate_import_directive_groups = false
 # Dotnet namespace options
-dotnet_style_namespace_match_folder = true:suggestion
+dotnet_style_namespace_match_folder = true : suggestion
 dotnet_diagnostic.IDE0130.severity = suggestion
 # Disable requirement for qualified using directives
 dotnet_diagnostic.SA1135.severity = none
@@ -260,13 +308,25 @@ csharp_space_around_declaration_statements = false
 csharp_space_before_open_square_brackets = false
 csharp_space_between_empty_square_brackets = false
 csharp_space_between_square_brackets = false
+
+# Specifically for new keyword space
+resharper_space_within_single_line_array_initializer_braces = true
+resharper_space_in_singleline_method = true
+resharper_space_after_new_expression = true
+resharper_space_after_type_parameter_constraint_colon = true
+dotnet_diagnostic.SA1000.severity = none
+
+
 # Wrap options
 # https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/formatting-rules#wrap-options
 csharp_preserve_single_line_statements = false
 csharp_preserve_single_line_blocks = true
 # Namespace options
 # https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/formatting-rules#namespace-options
-csharp_style_namespace_declarations = file_scoped:warning
+csharp_style_namespace_declarations = file_scoped : warning
+# Disable StyleCop SA1118 (Parameter should not span multiple lines)
+dotnet_diagnostic.SA1118.severity = none
+
 
 ##########################################
 # .NET Naming Rules
@@ -472,16 +532,13 @@ dotnet_naming_rule.parameters_rule.severity = warning
 #########################################################################################################
 # GdUnit4 specific overrides
 #########################################################################################################
-# .NET Style Rules
-# https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/language-rules#net-style-rules
-[*.{cs,csx,cake,vb,vbx}]
-dotnet_style_qualification_for_field = false:warning
-dotnet_style_qualification_for_property = false:warning
-dotnet_style_qualification_for_method = false:warning
-dotnet_style_qualification_for_event = false:warning
 
-# Code block preferences
-csharp_prefer_braces = false:warning
+# Disable file header rules
+dotnet_diagnostic.SA1633.severity = none # File must have header
+dotnet_diagnostic.SA1635.severity = none # File header must have copyright text
+dotnet_diagnostic.SA1637.severity = none # File header must contain file name
+dotnet_diagnostic.SA1638.severity = none # File header file name documentation must match file name
+dotnet_diagnostic.SA1634.severity = none # File header must show copyright
 
 # .NET formatting rules
 # https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/formatting-rules#net-formatting-rules
@@ -489,6 +546,11 @@ csharp_prefer_braces = false:warning
 # Organize using directives
 dotnet_separate_import_directive_groups = true
 
+dotnet_style_qualification_for_field = false : warning
+dotnet_style_qualification_for_property = false : warning
+dotnet_style_qualification_for_method = false : warning
+dotnet_style_qualification_for_event = false : warning
+dotnet_diagnostic.SA1101.severity = none
 
 dotnet_diagnostic.CA1822.severity = none
 
@@ -506,3 +568,50 @@ dotnet_analyzer_diagnostic.category-Usage.severity = warning
 
 # allow constant arrays as arguments
 dotnet_diagnostic.CA1861.severity = none
+
+#### Define naming rules for constants
+
+# Disable StyleCop's underscore rule that prevents SCREAMING_SNAKE_CASE
+dotnet_diagnostic.SA1310.severity = none
+
+
+# This will make everything that isn't already covered use PascalCase
+dotnet_naming_symbols.remaining_symbols.applicable_kinds = *
+dotnet_naming_symbols.remaining_symbols.applicable_accessibilities = *
+
+# Make everything else use PascalCase
+dotnet_naming_rule.remaining_symbols_should_be_pascal_case.symbols = remaining_symbols
+dotnet_naming_rule.remaining_symbols_should_be_pascal_case.style = pascal_case_style
+dotnet_naming_rule.remaining_symbols_should_be_pascal_case.severity = warning
+
+
+# ReSharper/Rider specific settings for blank lines
+resharper_blank_lines_after_block_statements = 1
+resharper_blank_lines_around_single_line_type = 1
+resharper_blank_lines_around_field = 1
+resharper_blank_lines_around_property = 1
+resharper_blank_lines_around_method = 1
+resharper_csharp_blank_lines_around_method = 1
+resharper_blank_lines_after_start_comment = 0
+resharper_blank_lines_after_block_comment = 0
+resharper_blank_lines_before_single_line_comment = 1
+resharper_blank_lines_after_using_list = 1
+resharper_keep_blank_lines_in_code = 1
+resharper_csharp_keep_blank_lines_in_code = 1
+resharper_remove_blank_lines_near_braces = true
+resharper_blank_lines_between_using_groups = 1
+
+# Ensure Rider keeps 1 blank line max in declarations
+resharper_keep_blank_lines_in_declarations = 1
+resharper_csharp_keep_blank_lines_in_declarations = 1
+dotnet_diagnostic.SA1507.severity = warning
+
+# ignore trailing commas
+dotnet_diagnostic.SA1413.severity = none
+
+
+# Rider/ReSharper specific settings
+resharper_csharp_default_case_must_be_last = true
+resharper_empty_case_block_style = allowed
+resharper_default_case_seen_as_redundant = true
+resharper_redundant_empty_switch_section_highlighting = do_not_show

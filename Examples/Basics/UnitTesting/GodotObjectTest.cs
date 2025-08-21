@@ -1,4 +1,4 @@
-﻿namespace GdUnit4Net.Examples;
+namespace GdUnit4Net.Examples;
 
 using GdUnit4;
 

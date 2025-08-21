@@ -22,5 +22,5 @@ nupkg/*
 .generated/
 *.*.import
 TestResults/
-gdunit4_testadapter/
+gdunit4_testadapter*/
 **GdUnitRunner_*.cfg

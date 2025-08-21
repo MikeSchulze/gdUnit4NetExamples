@@ -4,16 +4,9 @@ This repository contains example projects and test cases demonstrating how to us
 
 ## Table of Contents
 
-- [Quick Start](#quick-start)
-- [Project Structure](#project-structure)
+- [Examples & Quick Start](/Examples/README.md)
 - [Requirements & Prerequisites](#requirements--prerequisites)
 - [Installation](#installation)
-- [Running the Examples](#running-the-examples)
-    - [Using JetBrains Rider](#running-the-examples-in-jetbrains-rider)
-- [Examples Overview](#examples-overview)
-    - [Unit Tests](#unit-tests)
-    - [Integration Tests](#integration-tests)
-    - [2D & 3D Examples](#examples)
 - [Code Quality and Best Practices](#code-quality-and-best-practices)
     - [Build Configuration](#build-configuration)
     - [Code Style Enforcement](#code-style-enforcement)
@@ -22,38 +15,10 @@ This repository contains example projects and test cases demonstrating how to us
 - [Contributing](#contributing)
 - [License](#license)
 
-## Quick Start
-
-For those familiar with Godot and C# testing who want to get started immediately:
-
-```bash
-# Clone the repository
-git clone https://github.com/MikeSchulze/gdUnit4NetExamples.git
-
-# Build the project (requires .NET 9.0)
-cd gdUnit4NetExamples
-dotnet build
-
-# Open in your IDE or Godot to explore examples
-```
-
-The most basic example can be found in [UnitTests/DotNetObjectTest.cs](UnitTests/DotNetObjectTest.cs), which demonstrates simple assertions with .NET objects.
-
 ## Project Structure
 
-The repository is organized into the following structure:
-
-```
-GdUnit4NetExamples/
-├── UnitTests/          # Basic unit test examples
-├── IntegrationTests/   # Integration test examples
-├── Examples/           # Sample implementations to test
-│   ├── MenuDemo2D/     # 2D menu testing example
-│   └── RoomDemo3D/     # 3D room testing example
-└── docs/               # Detailed documentation
-```
-
-For detailed documentation on specific testing techniques, see the [docs folder](docs/).
+- **Examples/** - Complete examples and tutorials
+- **Demos/** - Full demo projects with comprehensive tests
 
 ## Requirements & Prerequisites
 
@@ -91,7 +56,7 @@ To work with this project, you'll need:
    ```bash
    dotnet --list-sdks
     7.0.404 [C:\Program Files\dotnet\sdk]
-    8.0.201 [C:\Program Files\dotnet\sdk]
+    8.0.411 [C:\Program Files\dotnet\sdk]
    ```
    Ensure .NET 9.0.x is listed among the installed SDKs.
 
@@ -105,8 +70,8 @@ To work with this project, you'll need:
    ```bash
    dotnet --list-sdks
     7.0.404 [C:\Program Files\dotnet\sdk]
-    8.0.201 [C:\Program Files\dotnet\sdk]
-    9.0.203 [C:\Program Files\dotnet\sdk]
+    8.0.411 [C:\Program Files\dotnet\sdk]
+    9.0.304 [C:\Program Files\dotnet\sdk]
    ```
 
 3. **Build the project**
@@ -121,77 +86,6 @@ To work with this project, you'll need:
     - Open the project.godot file
 
 ---
-
-## Running the Examples
-
-### Running the Examples in JetBrains Rider
-
-1. **Open the project in Rider**
-    - Launch JetBrains Rider
-    - Select "Open" and navigate to the cloned repository
-    - Open the `GdUnit4NetExamples.sln` solution file
-
-2. **View Test Explorer**
-    - Go to the "Tests" tab in the left sidebar
-    - The test explorer should display your test classes and methods
-    - If tests aren't visible, try refreshing the test explorer
-
-3. **Configure Test Runner Settings**
-    - From the test explorer, click the settings gear icon (⚙️)
-    - Select "Unit Testing Settings..." from the dropdown menu
-      ![Rider Test Settings](assets/rider-test-settings1.png)
-
-
-4. **Set Up .runsettings File**
-    - In the Settings dialog, navigate to Build, Execution, Deployment → Unit Testing → Test Runner
-    - Under "Test settings," check "Use specific .runsettings/.testsettings settings file:"
-    - Click the browse button and select the `.runsettings` file located in the project root
-      ![Rider Test Runner Settings](assets/rider-test-settings2.png)
-
-5. **Configure Additional Test Settings (Optional)**
-    - While in the Settings dialog, you can also:
-        - Enable "Capture output" to see console output from tests
-        - Adjust the logging level as needed
-    - Click "Save" to apply your settings
-
-6. **Run the Tests**
-    - In the test explorer, you can run tests at different levels:
-        - Run all tests by clicking the run button at the top of the test explorer
-        - Run a specific test class by right-clicking on it and selecting "Run"
-        - Run a single test by right-clicking on the test name and selecting "Run"
-    - You can also run tests directly from the code editor by clicking the green "run" icons in the gutter next to test methods or classes
-
----
-
-## Examples Overview
-
-### Unit Tests
-
-The unit tests demonstrate basic testing capabilities with gdUnit4Net:
-
-- Testing .NET objects vs Godot objects
-- Basic assertions and test structure
-- Test attributes and lifecycle methods
-
-[View detailed unit testing documentation](docs/unit-testing.md)
-
-### Integration Tests
-
-The integration tests show how to test interactions between multiple components:
-
-- Testing signals between objects
-- Testing scene loading and instantiation
-- Testing complex behaviors
-
-[View detailed integration testing documentation](docs/integration-testing.md)
-
-### Examples
-
-- **Menu Demo (2D)**: Examples demonstrating how to test 2D menu interfaces
-  [View Menu Demo documentation](docs/menu-demo.md)
-
-- **Room Demo (3D)**: Examples showing how to test 3D environments and interactions
-  [View Room Demo documentation](docs/room-demo.md)
 
 ---
 
@@ -257,8 +151,8 @@ Example:
 /// Note that this is testing Godot's Vector2 type, not the System.Numerics.Vector2 type.
 /// </summary>
 [TestCase]
-public void CompareGodotVector2() => AssertThat(new Vector2(1, 1))
-    .IsEqual(new Vector2(1, 1));
+public void CompareGodotVector2()
+    => AssertThat(new Vector2(1, 1)).IsEqual(new Vector2(1, 1));
 ```
 
 ### IDE Integration
