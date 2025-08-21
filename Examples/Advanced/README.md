@@ -5,7 +5,7 @@ Welcome to the advanced gdUnit4Net examples! This section covers sophisticated t
 ## Prerequisites
 
 Before diving into advanced examples, ensure you understand:
-- Basic gdUnit4Net concepts from [Basics](../Basics/)
+- Basic gdUnit4Net concepts from [Basics](../Basics/README.md)
 - Test project setup and configuration
 - Environment variables vs configuration files
 - Basic Godot object lifecycle and memory management
