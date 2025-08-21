@@ -1,4 +1,7 @@
-# GdUnit4NetExamples
+<h1 align="center">GdUnit4Net Examples</h1>
+<p align="center">
+  <img src="assets/wip.png" alt="" width="50%"></br>
+</p>
 
 This repository contains example projects and test cases demonstrating how to use [gdUnit4Net](https://github.com/MikeSchulze/gdUnit4Net), a C# unit testing framework for Godot 4.
 
