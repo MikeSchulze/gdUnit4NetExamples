@@ -2,7 +2,7 @@
 
 An example demonstrating how to test Godot-specific classes and functionality that require the Godot runtime.
 
-![img_1.png](img_1.png)
+![img.png](img.png)
 
 ## What This Example Shows
 
@@ -89,8 +89,6 @@ This is normal behavior - the trade-off for being able to test Godot-specific fu
 
 **"No test is available" Error?**
 This usually means the `GODOT_BIN` environment variable is not set. See Prerequisites section above.
-
-![img.png](img.png)
 
 **Tests Fail with Runtime Errors?**
 Ensure you're running tests in an environment where Godot runtime is available and the `GODOT_BIN` environment variable is correctly set to a valid Godot executable.

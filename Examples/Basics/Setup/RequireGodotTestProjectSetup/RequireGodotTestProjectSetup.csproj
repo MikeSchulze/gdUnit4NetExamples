@@ -47,6 +47,5 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="img.png"/>
-    <Content Include="img_1.png"/>
   </ItemGroup>
 </Project>
