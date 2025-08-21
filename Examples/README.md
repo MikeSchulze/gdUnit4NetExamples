@@ -5,8 +5,8 @@ Welcome to the gdUnit4Net examples! This section contains hands-on examples and 
 ## Getting Started
 
 **New to gdUnit4Net?** Start here:
-1. [Minimal Example Project](Examples/Basics/Setup/MinimalTestProjectSetup/README.md) - Your first test
-2. [Godot Runtime Example Project](Examples/Basics/Setup/RequireGodotTestProjectSetup/README.md) - Your first Godot test
+1. [Minimal Example Project](Basics/Setup/MinimalTestProjectSetup/README.md) - Your first test
+2. [Godot Runtime Example Project](Basics/Setup/RequireGodotTestProjectSetup/README.md) - Your first Godot test
 2. [Basic Tests](Basics/Tests/) - Common testing patterns
 3. [Demos](../Demos/) - Complete project examples
 
@@ -98,3 +98,4 @@ After running the examples:
 - Explore the [detailed documentation](../docs/) for in-depth guides
 - Check out the [gdUnit4Net API documentation](https://github.com/MikeSchulze/gdUnit4Net)
 - Try creating your own tests based on the patterns you've learned
+
