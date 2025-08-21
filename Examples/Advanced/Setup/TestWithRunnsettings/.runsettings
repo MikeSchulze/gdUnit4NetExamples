@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Advanced test configuration using .runsettings file
+    This provides centralized configuration for gdUnit4Net test execution,
+    offering an alternative to environment variables and enabling CI/CD friendly setup
+-->
+<RunSettings>
+    <!-- Core test execution configuration -->
+    <RunConfiguration>
+        <!-- Limit CPU usage to prevent Godot conflicts (Godot doesn't handle parallelization well) -->
+        <MaxCpuCount>1</MaxCpuCount>
+
+        <!-- Directory to search for test adapters -->
+        <TestAdaptersPaths>.</TestAdaptersPaths>
+
+        <!-- Output directory for test results -->
+        <ResultsDirectory>./TestResults</ResultsDirectory>
+
+        <!-- Target frameworks for test execution -->
+        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+
+        <!-- Maximum time for entire test session (30 minutes = 1800000ms) -->
+        <!-- Long timeout needed due to Godot runtime startup overhead -->
+        <TestSessionTimeout>1800000</TestSessionTimeout>
+
+        <!-- Treat scenarios with no discovered tests as an error -->
+        <TreatNoTestsAsError>true</TreatNoTestsAsError>
+
+        <!-- Environment variables for test execution -->
+        <!-- Alternative to setting GODOT_BIN in system environment -->
+        <EnvironmentVariables>
+            <GODOT_BIN>D:\development\Godot_v4.4.1-stable_mono_win64\Godot_v4.4.1-stable_mono_win64.exe</GODOT_BIN>
+        </EnvironmentVariables>
+    </RunConfiguration>
+
+    <!-- Test result logging configuration -->
+    <LoggerRunSettings>
+        <Loggers>
+            <!-- Console output for real-time feedback -->
+            <Logger friendlyName="console" enabled="True">
+                <Configuration>
+                    <Verbosity>normal</Verbosity>
+                </Configuration>
+            </Logger>
+
+            <!-- HTML report for detailed results viewing -->
+            <Logger friendlyName="html" enabled="True">
+                <Configuration>
+                    <LogFileName>test-result.html</LogFileName>
+                </Configuration>
+            </Logger>
+
+            <!-- TRX format for integration with CI/CD systems and IDEs -->
+            <Logger friendlyName="trx" enabled="True">
+                <Configuration>
+                    <LogFileName>test-result.trx</LogFileName>
+                </Configuration>
+            </Logger>
+        </Loggers>
+    </LoggerRunSettings>
+
+    <!-- gdUnit4Net specific configuration section -->
+    <GdUnit4>
+        <!-- Additional Godot runtime parameters. These are passed to the Godot executable when running tests.-->
+        <Parameters></Parameters>
+
+        <!-- Controls the display name format of test cases in the test results.
+                 Allowed values:
+                 - SimpleName: Uses only the method name (e.g., "TestMethod")
+                 - FullyQualifiedName: Uses the full path including class and method name (e.g., "MyNamespace.MyClass.TestMethod")
+                 Default: SimpleName
+                 FullyQualifiedName is recommended for larger projects to avoid naming conflicts -->
+        <DisplayName>FullyQualifiedName</DisplayName>
+    </GdUnit4>
+</RunSettings>

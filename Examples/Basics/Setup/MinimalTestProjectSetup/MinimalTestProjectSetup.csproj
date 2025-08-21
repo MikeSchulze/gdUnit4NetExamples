@@ -56,8 +56,4 @@
     <PackageReference Include="gdUnit4.test.adapter" Version="3.0.0"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="img.png"/>
-  </ItemGroup>
-
 </Project>

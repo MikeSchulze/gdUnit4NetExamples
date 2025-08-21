@@ -3,6 +3,7 @@
     This enables testing of Godot-specific types and functionality
 -->
 <Project Sdk="Godot.NET.Sdk/4.4.1">
+
   <PropertyGroup>
     <!-- Target framework -->
     <TargetFramework>net9.0</TargetFramework>
@@ -16,6 +17,7 @@
     <IsPackable>false</IsPackable>
     <RootNamespace>GdUnit4.Test</RootNamespace>
   </PropertyGroup>
+
   <PropertyGroup>
     <!--
         Copies all dependency assemblies to the output directory
@@ -28,6 +30,7 @@
     -->
     <TestFramework>GdUnit4</TestFramework>
   </PropertyGroup>
+
   <ItemGroup>
     <!--
         Core .NET test SDK - provides the foundation for running tests
@@ -45,7 +48,5 @@
     -->
     <PackageReference Include="gdUnit4.test.adapter" Version="3.0.0"/>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="img.png"/>
-  </ItemGroup>
+
 </Project>

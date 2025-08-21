@@ -55,6 +55,8 @@ Real-world examples showing complete projects with comprehensive test suites:
 Before you start, you need to clone the repository.
 ```bash
 git clone https://github.com/MikeSchulze/gdUnit4NetExamples.git
+cd gdUnit4NetExamples
+dotnet build
 ```
 
 ### Running the Examples in JetBrains Rider
