@@ -27,7 +27,8 @@ The basic examples are organized into:
 └── Tests/              # Fundamental testing patterns and techniques
     ├── AssertionExamples/              # Common assertion patterns
     ├── TestAttributes/                 # Test lifecycle and attributes
-    ├── SimpleGodotNodeTest/            # Basic Node testing
+    ├── OnGodotTypes/                   # Basic test examples using Godot types
+    ├── OnDotNetTypes/                  # Basic test examples using standard .net types
     └── MemoryManagement/               # Godot object cleanup patterns
 ```
 
