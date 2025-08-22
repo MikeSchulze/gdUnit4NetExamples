@@ -83,11 +83,6 @@ To work with this project, you'll need:
    ```
    This will restore all required NuGet packages and build the project.
 
-4. **Open the project in Godot**
-    - Launch Godot 4.4.x
-    - Select "Import" and navigate to the cloned repository
-    - Open the project.godot file
-
 ---
 
 ---
