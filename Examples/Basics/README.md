@@ -13,8 +13,9 @@ To follow these examples, you need:
 ## Getting Started
 
 **New to gdUnit4Net?** Follow this learning path:
-1. [Project Setup Examples](Setup/) - Learn how to configure test projects
-2. [Basic Test Examples](Tests/) - Master fundamental testing patterns and techniques
+1. [Minimal Setup](Setup/MinimalTestProjectSetup/README.md) - Minimal example demonstrating the simplest possible gdUnit4Net test setup
+2. [Environment Setup](Setup/RequireGodotTestProjectSetup/README.md) - Essential project configuration and environment variables
+3. [Basic Test Writing](Tests/) - Master fundamental testing patterns and techniques
 
 ## Basics Structure
 
@@ -50,22 +51,22 @@ Master fundamental testing concepts and patterns:
 
 ## Key Concepts You'll Learn
 
-### Project Configuration
+### Project Setup
 - Difference between .NET-only and Godot runtime testing
-- Essential NuGet packages for gdUnit4Net
-- Project file setup and commenting
 - Environment variable configuration
+- Required NuGet packages
+- Basic .csproj structure
 
 ### Testing Fundamentals
-- Writing your first test with [TestCase]
-- Using assertions effectively
-- Test class organization with [TestSuite]
-- Understanding test execution lifecycle
+- Writing your first test methods [TestCase]
+- Understanding [TestSuite] and [TestCase] attributes
+- Basic assertion patterns with AssertThat()
+- Test organization and naming conventions
 
 ### Godot-Specific Testing
-- When to use [RequireGodotRuntime]
+- Using [RequireGodotRuntime] for Godot-specific tests
 - Testing Godot objects (Vector3, Node, GodotObject)
-- Memory management with Free() calls
+- Memory management with AutoFree()
 - Environment setup for Godot runtime tests
 
 ## Learning Progression
@@ -79,17 +80,13 @@ Master fundamental testing concepts and patterns:
 
 ## When to Use Each Setup
 
-### Use MinimalTestProjectSetup When:
-- ✅ Testing pure C# logic and algorithms
-- ✅ Testing utility classes and helper methods
-- ✅ No Godot-specific types or functionality needed
-- ✅ Want fastest test execution
+### Start with Basics When:
 
-### Use RequireGodotTestProjectSetup When:
-- ✅ Testing classes that inherit from Godot types
-- ✅ Using Vector3, Transform3D, or other Godot math types
-- ✅ Testing Node behavior and scene interactions
-- ✅ Need access to Godot's runtime environment
+- ✅ New to gdUnit4Net or unit testing
+- ✅ Setting up your first test project
+- ✅ Learning assertion patterns
+- ✅ Testing simple logic and calculations
+- ✅ Getting familiar with Godot object testing
 
 ## Common Beginner Questions
 
