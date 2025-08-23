@@ -27,7 +27,7 @@ The advanced examples are organized into:
 │   └── TestWithAnalyzers/      # Compile-time validation and code analysis 
 └── Tests/              # Complex testing scenarios and patterns
     ├── SignalTesting/          # Testing Godot signals and events
-    ├── SceneManagement/        # Loading and testing scenes
+    ├── SceneTesting/        # Loading and testing scenes
     ├── AsyncTesting/           # Testing async operations
     ├── MockingAndStubs/        # Test doubles and dependency injection
     └── PerformanceTesting/     # Benchmarking and performance validation

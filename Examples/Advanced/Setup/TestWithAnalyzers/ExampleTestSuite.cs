@@ -60,6 +60,7 @@ public class ExampleTestSuite
     [TestCase]
 
     // ❌ Missing [RequireGodotRuntime] - analyzer will flag this!
+    [IgnoreUntil(Description = "We skip this test because it is not configured to run in a Godot environment.")]
     public void IsNodeNotNullInvalidTest()
     {
         var node = AutoFree(new Node());
