@@ -16,8 +16,6 @@ The examples are organized into the following structure:
 ```
 ├── Basics/                   # Beginner examples and tutorials
 │   ├── Setup/                # Project setup examples
-│   │   ├── MinimalTestProjectSetup/       # Minimal testing project
-│   │   └── RequireGodotTestProjectSetup/  # Minmal require Godot runtime testing project
 │   └── Tests/                # Basic unit test patterns and techniques
 ├── Advanced/                 # Advanced testing examples
 │   ├── Setup/                # Advanced project configurations
