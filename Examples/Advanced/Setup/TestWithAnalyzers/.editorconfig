@@ -1,0 +1,6 @@
+﻿# .editorconfig
+
+[*.cs]
+# ⚠️ DEMO ONLY: Override GdUnit0501 severity for this example project
+# DO NOT use this in production projects!
+dotnet_diagnostic.GdUnit0501.severity = warning

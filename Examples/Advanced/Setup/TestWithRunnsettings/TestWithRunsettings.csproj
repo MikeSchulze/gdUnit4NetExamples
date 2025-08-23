@@ -9,7 +9,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <RootNamespace>GdUnit4.Test</RootNamespace>
+    <RootNamespace>GdUnit4.Examples.Advanced.Setup.TestWithRunsettings</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>

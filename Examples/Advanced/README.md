@@ -13,8 +13,9 @@ Before diving into advanced examples, ensure you understand:
 ## Getting Started with Advanced Topics
 
 **Ready for more complex testing?** Explore in this order:
-1. [Configuration Management](Setup/TestWithRunnsettings/README.md) - Professional test configuration
-2. [Complex Test Scenarios](Tests/) - Advanced testing patterns and techniques
+1. [Global Test Settings](Setup/TestWithRunsettings/README.md) - Professional test configuration using .runsettings files
+2. [Compile-time Analysis](Setup/TestWithAnalyzers/README.md) - Static analysis and error prevention with gdUnit4.analyzers
+3. [Complex Test Scenarios](Tests/) - Advanced testing patterns and techniques
 
 ## Advanced Topics Structure
 
@@ -22,7 +23,8 @@ The advanced examples are organized into:
 
 ```
 ├── Setup/              # Advanced project configurations
-│   └── TestWithRunsettings/    # Professional .runsettings configuration
+│   ├── TestWithRunsettings/    # Professional test settings configuration
+│   └── TestWithAnalyzers/      # Compile-time validation and code analysis 
 └── Tests/              # Complex testing scenarios and patterns
     ├── SignalTesting/          # Testing Godot signals and events
     ├── SceneManagement/        # Loading and testing scenes
@@ -35,10 +37,19 @@ The advanced examples are organized into:
 
 ### Setup/
 Professional project configurations for production-ready test environments:
+
 - **TestWithRunsettings**: Centralized configuration using .runsettings files
-- Alternative to environment variables for team and CI/CD scenarios
-- Multiple output formats and advanced logging
-- Environment-specific configurations
+    - Alternative to environment variables for team and CI/CD scenarios
+    - Multiple output formats and advanced logging
+    - Environment-specific configurations
+    - Better IDE integration and consistent team settings
+
+- **TestWithAnalyzers**: Compile-time validation with gdUnit4.analyzers
+    - Static analysis to catch common testing mistakes at compile time
+    - Prevents runtime errors by detecting missing [RequireGodotRuntime] attributes
+    - IDE integration with real-time feedback and quick fixes
+    - Enforces gdUnit4Net best practices automatically
+    - Improves developer productivity and code quality
 
 ### Tests/
 Advanced testing patterns and complex scenarios:
@@ -51,10 +62,16 @@ Advanced testing patterns and complex scenarios:
 ## Key Concepts You'll Learn
 
 ### Configuration Management
-- Using .runsettings for team consistency
+- Using .runsettings for team consistency and CI/CD integration
 - Environment-specific test configurations
-- CI/CD integration strategies
-- Advanced logging and reporting
+- Advanced logging and reporting options
+- Static analysis integration for error prevention
+
+### Code Quality and Analysis
+- Compile-time validation of test code
+- Preventing common gdUnit4Net mistakes before runtime
+- IDE integration for immediate feedback
+- Enforcing coding standards and best practices
 
 ### Testing Strategies
 - Isolation techniques for complex dependencies
@@ -73,7 +90,7 @@ Advanced testing patterns and complex scenarios:
 | Level | Focus | Examples |
 |-------|-------|----------|
 | **Basics** | Learning fundamentals | Simple assertions, basic setup |
-| **Advanced** | Professional techniques | Configuration management, complex scenarios |
+| **Advanced** | Professional techniques | Configuration management, static analysis, complex scenarios |
 
 ## When to Use Advanced Techniques
 
@@ -82,6 +99,14 @@ Advanced testing patterns and complex scenarios:
 - ✅ Setting up CI/CD pipelines
 - ✅ Need multiple test output formats
 - ✅ Managing different environments (dev, staging, prod)
+- ✅ Want consistent configuration across team members
+
+### Use Static Analysis When:
+- ✅ Teams wanting to enforce gdUnit4Net best practices automatically
+- ✅ Projects requiring high test reliability and quality
+- ✅ Developers who want immediate feedback on testing mistakes
+- ✅ Codebases with many contributors to maintain consistency
+- ✅ CI/CD pipelines that should fail fast on test configuration errors
 
 ### Use Advanced Testing When:
 - ✅ Testing complex interactions between systems
@@ -89,10 +114,22 @@ Advanced testing patterns and complex scenarios:
 - ✅ Testing performance-critical code
 - ✅ Working with large, complex scenes
 
+## Setup Examples Comparison
+
+| Aspect | TestWithRunsettings | TestWithAnalyzers |
+|--------|-------------------|-------------------|
+| **Primary Focus** | Test execution configuration | Code quality and error prevention |
+| **Configuration Method** | .runsettings files | gdUnit4.analyzers package |
+| **Team Benefits** | Consistent test settings | Enforced coding standards |
+| **CI/CD Integration** | Multiple output formats | Early error detection |
+| **Developer Experience** | Professional test reports | Real-time feedback in IDE |
+| **Error Prevention** | Runtime configuration issues | Compile-time validation |
+
 ## Next Steps
 
 After mastering advanced techniques:
 - Apply learned concepts to your own projects
+- Combine .runsettings configuration with analyzer validation
 - Contribute your own advanced examples
 - Explore integration with external testing tools
 - Share your testing strategies with the community
@@ -104,3 +141,4 @@ Have an advanced testing scenario not covered here? We welcome contributions! Co
 - Integration with external tools
 - Advanced CI/CD configurations
 - Performance profiling techniques
+- Custom analyzer rules

@@ -1,0 +1,10 @@
+# Git ignore file - specifies which files and directories Git should ignore
+# These files are typically generated during build/development and shouldn't be committed
+
+# Godot 4+ specific ignores
+# .godot/ contains generated files, imported assets, and build cache
+# This folder is recreated automatically when opening the project in Godot
+.godot/
+
+#
+gdunit4_testadapter_v5/

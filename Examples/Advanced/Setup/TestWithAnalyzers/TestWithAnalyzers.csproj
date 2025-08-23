@@ -1,0 +1,68 @@
+﻿<!--
+    Test project for gdUnit4Net - uses Godot.NET.Sdk to integrate with Godot's build system
+    This enables testing of Godot-specific types and functionality
+-->
+<Project Sdk="Godot.NET.Sdk/4.4.1">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>GdUnit4.Examples.Advanced.Setup.TestWithAnalyzers</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <TestFramework>GdUnit4</TestFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Configure analyzer rule severities -->
+    <!--
+    ⚠️ DEMO ONLY: Set GdUnit0501 to warning instead of default error
+    This is configured ONLY to allow this example project to compile and demonstrate
+    both correct and incorrect analyzer patterns in the same project.
+
+    DO NOT use this configuration in real projects!
+    The default error severity for GdUnit0501 helps catch missing [RequireGodotRuntime]
+    attributes early and prevents runtime failures.
+    -->
+    <!-- Override GdUnit0501 severity from error to warning -->
+    <WarningsNotAsErrors>GdUnit0501</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1"/>
+    <PackageReference Include="gdUnit4.api" Version="5.0.0"/>
+    <PackageReference Include="gdUnit4.test.adapter" Version="3.0.0"/>
+    <!--
+     ⭐ ADVANCED: gdUnit4Net analyzers - provides compile-time static analysis
+
+     This package adds Roslyn analyzers that catch common testing mistakes during compilation:
+
+     🔍 What the analyzers detect:
+     • Missing [RequireGodotRuntime] when using Godot types (Node, Vector3, etc.)
+     • Mismatched test method signatures and attributes
+
+     💡 Benefits:
+     • Prevents runtime errors by catching issues at compile time
+     • Provides clear, actionable error messages and fix suggestions
+     • Improves developer productivity with immediate feedback
+     • Reduces debugging time by preventing common mistakes
+     • Enforces gdUnit4Net best practices automatically
+
+     ⚙️ Configuration:
+     • Analyzers run automatically during build
+     • Can be configured via .editorconfig or ruleset files
+     • Warnings can be promoted to errors for stricter enforcement
+     • Individual rules can be disabled if needed
+
+     🚀 IDE Integration:
+     • Works in Visual Studio, VS Code, and JetBrains Rider
+     • Provides real-time feedback as you type
+     • Shows squiggly underlines for detected issues
+     • Offers quick fixes and code actions where applicable
+    -->
+    <PackageReference Include="gdUnit4.analyzers" Version="1.0.0"/>
+  </ItemGroup>
+</Project>
