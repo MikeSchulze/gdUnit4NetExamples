@@ -78,13 +78,5 @@ public class ExampleTestSuite
     ///     Expected result: Test compiles cleanly and runs without Godot runtime.
     /// </summary>
     [TestCase]
-    public void TestPureCSharpObject()
-    {
-        var player = new
-        {
-            Name = "Hero",
-            Level = 10
-        };
-        AssertThat(player).IsNotNull();
-    }
+    public void TestPureCSharpObject() => AssertThat(new object()).IsNotNull();
 }

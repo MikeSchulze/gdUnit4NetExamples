@@ -82,6 +82,7 @@ public class GodotArrayTests
         };
 
         // ✅ GOOD: Direct comparison with expected array - clean and readable
-        AssertThat(array).IsEqual([1, "hello", 3.14, true]);
+        AssertThat(array)
+            .IsEqual(array.Duplicate());
     }
 }

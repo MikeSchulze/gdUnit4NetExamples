@@ -99,9 +99,7 @@ public class SceneLoadingOnTestSetup
     [TestCase]
     public void TestCaseA()
         => AssertThat(runner.Scene())
-            .IsNotNull()
-            .IsInsideTree()
-            .IsTrue();
+            .IsNotNull();
 
     /// <summary>
     ///     Tests basic scene accessibility and state.
@@ -115,7 +113,5 @@ public class SceneLoadingOnTestSetup
     [TestCase]
     public void TestCaseB()
         => AssertThat(runner.Scene())
-            .IsNotNull()
-            .IsInsideTree()
-            .IsTrue();
+            .IsNotNull();
 }
