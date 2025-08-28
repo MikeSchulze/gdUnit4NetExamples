@@ -1,4 +1,4 @@
-﻿namespace GdUnit4.Examples.Basics.Tests.MemoryManagement;
+namespace GdUnit4.Examples.Basics.Tests.MemoryManagement;
 
 using Godot;
 

@@ -1,4 +1,4 @@
-﻿namespace GdUnit4.Examples.Basics.Tests.OnGodotObjects;
+namespace GdUnit4.Examples.Basics.Tests.OnGodotObjects;
 
 using Godot;
 

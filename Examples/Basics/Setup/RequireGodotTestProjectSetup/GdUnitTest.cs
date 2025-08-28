@@ -1,4 +1,4 @@
-﻿namespace GdUnit4.Examples.Basics.Setup;
+namespace GdUnit4.Examples.Basics.Setup;
 
 // This 'using static' directive allows us to call AssertThat() directly
 // instead of writing Assertions.AssertThat(), making test code cleaner

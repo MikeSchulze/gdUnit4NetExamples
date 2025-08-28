@@ -1,4 +1,4 @@
-﻿namespace GdUnit4.Examples.Basics.Tests.TestAttributes;
+namespace GdUnit4.Examples.Basics.Tests.TestAttributes;
 
 using static Assertions;
 

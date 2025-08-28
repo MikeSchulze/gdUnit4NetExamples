@@ -1,4 +1,4 @@
-﻿namespace GdUnit4.Examples.Advanced.Setup.TestWithAnalyzers;
+namespace GdUnit4.Examples.Advanced.Setup.TestWithAnalyzers;
 
 using Godot;
 

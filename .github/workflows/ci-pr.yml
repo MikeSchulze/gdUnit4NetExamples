@@ -72,7 +72,7 @@ jobs:
       - name: "Check Code Formatting"
         if: ${{ !cancelled() }}
         run: |
-          dotnet format --verify-no-changes --verbosity diagnostic
+          dotnet format --verify-no-changes --verbosity diagnostic --exclude-diagnostics GdUnit0501 GdUnit0502
 
   example-tests:
     name: "🧪 Example Tests"
