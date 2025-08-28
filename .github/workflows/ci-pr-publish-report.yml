@@ -1,0 +1,44 @@
+name: 'Publish Test Report'
+on:
+  workflow_run:
+    workflows: [ 'ci-pr' ]  # runs after ci-pr workflow
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      workflow_run_id:
+        description: 'ID of the workflow run to download artifacts from.'
+        required: true
+        default: ''
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  publish-reports:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: .github
+
+      # publish Analyzer Tests results
+      - name: Download test artifacts
+        uses: actions/download-artifact@v5.0.0
+        with:
+          name: example_report
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: MikeSchulze/gdUnit4NetExamples
+          run-id: ${{ github.event.inputs.workflow_run_id || github.event.workflow_run.id }}
+
+      - name: Publish API Test Results
+        uses: dorny/test-reporter@v2.1.1
+        with:
+          name: example_report
+          path: './TestResults/*.trx'
+          reporter: dotnet-trx
+          fail-on-error: 'false'
+          fail-on-empty: 'false'
+          use-actions-summary: 'false'

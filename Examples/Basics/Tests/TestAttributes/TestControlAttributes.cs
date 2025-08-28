@@ -33,11 +33,6 @@ public class TestControlAttributes
     [TestCase]
     [IgnoreUntil]
     public void TemporarilyIgnoredTest() =>
-
-        // This test will be skipped - useful for:
-        // - Tests that depend on features not yet implemented
-        // - Tests that are temporarily failing due to known bugs
-        // - Tests that need to be fixed later
         AssertThat(false).IsTrue(); // This would fail, but test is ignored
 
     /// <summary>

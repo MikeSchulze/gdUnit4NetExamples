@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Tests"
+config/name="BasicTests"
 config/features=PackedStringArray("4.4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
 
-project/assembly_name="Tests"
+project/assembly_name="BasicTests"
