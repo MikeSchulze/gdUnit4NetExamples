@@ -1,4 +1,4 @@
-﻿#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8604 // Possible null reference argument.
 namespace GdUnit4.Examples.Basics.Tests.OnGodotObjects;
 
 using System.Diagnostics.CodeAnalysis;

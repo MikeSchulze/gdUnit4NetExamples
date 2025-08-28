@@ -1,4 +1,4 @@
-﻿namespace GdUnit4.Examples.Advanced.Setup.TestWithRunsettings;
+namespace GdUnit4.Examples.Advanced.Setup.TestWithRunsettings;
 
 using Godot;
 

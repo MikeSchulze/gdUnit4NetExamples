@@ -1,4 +1,4 @@
-﻿namespace GdUnit4.Examples.Basics.Tests.OnCSharpObjects;
+namespace GdUnit4.Examples.Basics.Tests.OnCSharpObjects;
 
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
