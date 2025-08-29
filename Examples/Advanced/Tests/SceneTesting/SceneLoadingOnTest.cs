@@ -39,7 +39,7 @@ public class SceneLoadingOnTest
     public void SceneLoading()
     {
         // Example to load a scene by resource path, set autoFree to true
-        var runner = ISceneRunner.Load("res://SceneTesting/TestSceneWithButton.tscn", true);
+        var runner = ISceneRunner.Load("res://SceneTesting/Scenes/TestSceneWithButton.tscn", true);
 
         // verify
         AssertThat(runner).IsNotNull();
