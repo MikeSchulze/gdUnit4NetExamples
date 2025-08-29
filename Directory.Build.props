@@ -35,6 +35,11 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Suppress CS1591 for files in Godot's generated directories -->
+    <NoWarn Condition="$(MSBuildProjectFile) != '' AND $(OutputPath.Contains('.godot'))">$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
   <!--
   External Code Analyzers:
   These packages provide additional rules beyond what's built into the .NET SDK.

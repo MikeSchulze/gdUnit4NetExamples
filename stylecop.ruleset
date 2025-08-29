@@ -17,5 +17,8 @@
   </Rules>
   <Rules AnalyzerId="Godot" RuleNamespace="GdUnit4.Examples">
     <Rule Id="CA2000" Action="None"/> <!-- Disable Dispose objects before losing scope -->
+    <Rule Id="CA2007" Action="None"/> <!-- Disable Do not directly await a Task -->
+    <Rule Id="CA1711" Action="None"/> <!-- Disable Identifiers should not have incorrect suffix  -->
+
   </Rules>
 </RuleSet>
