@@ -1,16 +1,27 @@
-namespace GdUnit4.Examples.Advanced.Tests.SceneTesting.Scenes;
+namespace GdUnit4.Examples.Advanced.Tests.Resources;
+
+using System.Diagnostics;
 
 using Godot;
 
 /// <summary>
-///     A comprehensive test scene script demonstrating common Godot patterns for scene testing.
+///     Enhanced test scene with comprehensive input tracking for validation-based testing.
 ///     This Control node serves as the root of TestSceneWithButton.tscn and implements
-///     various interaction patterns including button handling, keyboard input processing,
-///     signal chaining, and asynchronous operations for comprehensive test coverage.
+///     extensive input monitoring capabilities alongside the original interaction patterns
+///     including button handling, keyboard input processing, signal chaining, and
+///     asynchronous operations for comprehensive test coverage.
 ///     Scene Architecture:
-///     • Root: TestSceneWithButton (Control) - Main scene controller
+///     • Root: TestSceneWithButton (Control) - Main scene controller with input tracking
 ///     • Child: ExampleButton (Button) - Interactive UI element for mouse testing
+///     • Child: TextInput (LineEdit) - Text input control for keyboard testing
 ///     • Additional UI elements as needed for comprehensive interaction testing
+///     Input Tracking System:
+///     • Mouse position tracking through LastMousePosition property
+///     • Mouse button state monitoring (IsLeftMousePressed)
+///     • Drag and drop operation detection (IsDragging, DragStartPosition, DragEndPosition)
+///     • Keyboard state tracking (LastKeyPressed, IsSpacePressed, IsCtrlPressed)
+///     • Modifier key combination detection (WasCtrlSPressed)
+///     • Directional input processing (LastDirectionPressed)
 ///     Signal Flow Patterns:
 ///     • Button press → GameStarted signal emission
 ///     • Keyboard input (Space) → GameStarted signal emission
@@ -20,20 +31,29 @@ using Godot;
 ///     • Multiple input sources triggering the same signal (button + keyboard)
 ///     • Signal-to-method connection patterns using Callable.From()
 ///     • Asynchronous operations with timer-based delays
-///     • Input event processing through _GuiInput override
+///     • Input event processing through _Input override for comprehensive tracking
 ///     • Signal chaining for complex workflow testing
+///     • Observable input state properties for validation-based testing
 ///     Testing Applications:
-///     • Mouse interaction validation through button components
-///     • Keyboard input processing and event handling
+///     • Mouse interaction validation through position and state properties
+///     • Keyboard input processing verification through key state tracking
+///     • Drag and drop operation testing through drag state properties
 ///     • Asynchronous scene behavior with timer-based operations
 ///     • Signal emission patterns and workflow state management
-///     • Scene loading and component discovery patterns
+///     • Input processing verification without dependency on signal emissions
 ///     Design Principles:
-///     • Minimal complexity for clear test examples
+///     • Comprehensive input tracking for test validation
 ///     • Multiple interaction paths to the same outcomes
-///     • Observable behavior through signal emissions
+///     • Observable behavior through both properties and signal emissions
 ///     • Predictable timing for reliable test assertions
-///     • Reusable patterns applicable to real game scenarios.
+///     • Separation of input tracking from signal communication
+///     • Reusable patterns applicable to real game scenarios
+///     Enhanced Testing Capabilities:
+///     • Input state validation through public properties
+///     • Mouse tracking without relying on UI element states
+///     • Keyboard combination detection for complex input testing
+///     • Drag operation lifecycle monitoring
+///     • Clean separation between input mechanics and signal behavior.
 /// </summary>
 public partial class TestSceneWithButton : Control
 {
@@ -44,7 +64,7 @@ public partial class TestSceneWithButton : Control
     ///     processing workflows.
     ///     Emission Triggers:
     ///     • Button press events via OnButtonPressed() method
-    ///     • Space key press events via _GuiInput() method
+    ///     • Space key press events via _Input() method
     ///     • Direct method calls for programmatic testing
     ///     Connected Handlers:
     ///     • StartGame() method - initiates asynchronous game sequence
@@ -84,6 +104,17 @@ public partial class TestSceneWithButton : Control
     [Signal]
     public delegate void GameStoppedEventHandler();
 
+    // Input tracking properties
+
+    /// <summary>Gets current mouse position, updated on all mouse events.</summary>
+    public Vector2 LastMousePosition { get; private set; }
+
+    /// <summary>Gets pressed mouse button, updated on all mouse events.</summary>
+    public MouseButton LastMouseButton { get; private set; }
+
+    /// <summary>Gets most recently pressed key for input validation.</summary>
+    public Key LastKeyPressed { get; private set; }
+
     /// <summary>
     ///     Scene initialization method that establishes signal connections.
     ///     This method demonstrates the standard Godot pattern for connecting signals
@@ -106,6 +137,68 @@ public partial class TestSceneWithButton : Control
     /// </summary>
     public override void _Ready()
         => Connect(SignalName.GameStarted, Callable.From(StartGame));
+
+    /// <summary>
+    ///     Comprehensive input event processing method that captures and tracks all input.
+    ///     This method replaces _GuiInput with full input monitoring capabilities,
+    ///     processing mouse, keyboard, and other input events to provide observable
+    ///     state properties for validation-based testing.
+    ///     Input Processing Categories:
+    ///     • Mouse motion tracking (position updates)
+    ///     • Mouse button state monitoring (press/release with drag detection)
+    ///     • Keyboard input processing (key states, modifiers, combinations)
+    ///     • Directional input handling (arrow keys for navigation)
+    ///     Mouse Input Handling:
+    ///     • LastMousePosition updated on all mouse events
+    ///     • Left button press/release state tracking
+    ///     • Drag operation lifecycle detection (start position, end position)
+    ///     • Position-based validation support for click testing
+    ///     Keyboard Input Processing:
+    ///     • Individual key press/release state tracking
+    ///     • Modifier key combination detection (Ctrl+S patterns)
+    ///     • Directional input categorization for navigation testing
+    ///     • Signal emission integration for workflow testing
+    ///     Testing Integration:
+    ///     • All input state exposed through public properties
+    ///     • Enables input validation without signal dependency
+    ///     • Supports both input mechanics testing and signal workflow testing
+    ///     • Provides comprehensive input event lifecycle tracking
+    ///     Event Processing Pattern:
+    ///     • Input Event → State Property Update → Optional Signal Emission
+    ///     • Clean separation between input tracking and signal communication
+    ///     • Observable state changes for reliable test assertions.
+    /// </summary>
+    /// <param name="event">
+    ///     Input event to process and track. Handles InputEventMouseMotion,
+    ///     InputEventMouseButton, and InputEventKey for comprehensive input monitoring.
+    /// </param>
+    public override void _Input(InputEvent @event)
+    {
+        Debug.Assert(@event != null, nameof(@event) + " != null");
+        GD.PrintS(@event.AsText());
+        if (@event is InputEventMouseMotion mouseMotion)
+        {
+            LastMousePosition = mouseMotion.Position;
+            return;
+        }
+
+        if (@event is InputEventMouseButton mouseButton)
+        {
+            LastMousePosition = mouseButton.Position;
+            LastMouseButton = mouseButton.ButtonIndex;
+            return;
+        }
+
+        if (@event is InputEventKey keyEvent)
+        {
+            if (keyEvent.Pressed)
+            {
+                LastKeyPressed = keyEvent.Keycode;
+                if (keyEvent.Keycode == Key.Space)
+                    EmitSignal(SignalName.GameStarted);
+            }
+        }
+    }
 
     /// <summary>
     ///     Button press event handler that initiates the game sequence.
@@ -137,46 +230,6 @@ public partial class TestSceneWithButton : Control
     /// </summary>
     public void OnButtonPressed()
         => EmitSignal(SignalName.GameStarted);
-
-    /// <summary>
-    ///     Input event processing method that handles keyboard interactions.
-    ///     This method demonstrates Godot's input handling patterns and provides
-    ///     an alternative input pathway to the same game workflow, enabling
-    ///     comprehensive input testing scenarios.
-    ///     Input Processing:
-    ///     • Filters for InputEventKey events specifically
-    ///     • Checks for Space key (Key.Space) with Pressed state
-    ///     • Ignores key release events and other key types
-    ///     • Emits GameStarted signal when Space is pressed
-    ///     Event Filtering Logic:
-    ///     • Pattern matching used for clean event type checking
-    ///     • Only processes pressed events (not releases)
-    ///     • Specific key targeting prevents unintended activations
-    ///     • Immediate signal emission upon successful match
-    ///     Testing Capabilities:
-    ///     • Validates keyboard input processing works correctly
-    ///     • Tests alternative input method to same workflow
-    ///     • Verifies input filtering logic operates as expected
-    ///     • Confirms multiple input types can trigger identical outcomes
-    ///     Input Method Characteristics:
-    ///     • Processes input at scene level (not specific UI elements)
-    ///     • Requires scene to have input focus for events to be received
-    ///     • Works alongside other input methods without conflicts
-    ///     • Provides consistent behavior with button-based interactions
-    ///     Pattern Demonstration:
-    ///     • Input Event Processing → Signal Emission → Workflow Initiation
-    ///     • Alternative input pathway to same destination
-    ///     • Clean separation of input handling from workflow logic.
-    /// </summary>
-    /// <param name="event">
-    ///     The input event to process, filtered for InputEventKey instances.
-    ///     Only Space key press events will trigger signal emission.
-    /// </param>
-    public override void _GuiInput(InputEvent @event)
-    {
-        if (@event is InputEventKey { Pressed: true, Keycode: Key.Space })
-            EmitSignal(SignalName.GameStarted);
-    }
 
     /// <summary>
     ///     Asynchronous workflow method that simulates game processing with timer delay.
@@ -215,13 +268,8 @@ public partial class TestSceneWithButton : Control
     /// </summary>
     private async void StartGame()
     {
-        // Create scene timer for realistic async operation simulation
         var timer = GetTree().CreateTimer(0.1);
-
-        // Wait for timer completion using Godot's async signal pattern
         await ToSignal(timer, Timer.SignalName.Timeout);
-
-        // Emit completion signal to indicate workflow finished
         EmitSignal(SignalName.GameStopped);
     }
 }

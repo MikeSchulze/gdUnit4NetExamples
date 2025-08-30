@@ -16,6 +16,12 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: "Validate Markdown"
+      uses: DavidAnson/markdownlint-cli2-action@v20
+      with:
+        config: ".github/actions/formatting_checks/.markdownlint.jsonc"
+        globs: "**/*.md"
+
     - name: "Validate YAML"
       uses: ibiqlik/action-yamllint@v3
       with:
@@ -32,12 +38,6 @@ runs:
       with:
         exclude_file: ".github/actions/formatting_checks/.validationignore"
         use_gitignore: ${{ inputs.use-gitignore }}
-
-    - name: "Validate Markdown"
-      uses: DavidAnson/markdownlint-cli2-action@v20
-      with:
-        config: ".github/actions/formatting_checks/.markdownlint.jsonc"
-        globs: "**/*.md"
 
     - name: "Setup .NET SDK"
       uses: actions/setup-dotnet@v4

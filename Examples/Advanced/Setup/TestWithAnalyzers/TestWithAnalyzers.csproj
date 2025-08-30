@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1"/>
-    <PackageReference Include="gdUnit4.api" Version="5.1.0-alpha1"/>
+    <PackageReference Include="gdUnit4.api" Version="5.1.0-alpha2"/>
     <PackageReference Include="gdUnit4.test.adapter" Version="3.0.0"/>
     <!--
      ⭐ ADVANCED: gdUnit4Net analyzers - provides compile-time static analysis
