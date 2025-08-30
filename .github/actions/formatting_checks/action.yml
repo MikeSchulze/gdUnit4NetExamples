@@ -1,0 +1,50 @@
+name: "Formatting Checks"
+description: "Validate YAML, XML, Markdown, GitHub Actions workflows, and C# code formatting's"
+author: "MikeSchulze"
+
+inputs:
+  use-gitignore:
+    description: "Use .gitignore for validation exclusions"
+    required: false
+    default: "true"
+
+  actionlint-fail-on-error:
+    description: "Fail the action on actionlint errors"
+    required: false
+    default: "true"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Validate YAML"
+      uses: ibiqlik/action-yamllint@v3
+      with:
+        config_file: ".github/actions/formatting_checks/.yamllint.yml"
+
+    - name: "Validate GitHub Actions"
+      uses: raven-actions/actionlint@v2
+      with:
+        fail-on-error: ${{ inputs.actionlint-fail-on-error }}
+        matcher: true
+
+    - name: "Validate JSON and YAML"
+      uses: GrantBirki/json-yaml-validate@v3.3.2
+      with:
+        exclude_file: ".github/actions/formatting_checks/.validationignore"
+        use_gitignore: ${{ inputs.use-gitignore }}
+
+    - name: "Validate Markdown"
+      uses: DavidAnson/markdownlint-cli2-action@v20
+      with:
+        config: ".github/actions/formatting_checks/.markdownlint.jsonc"
+        globs: "**/*.md"
+
+    - name: "Setup .NET SDK"
+      uses: actions/setup-dotnet@v4
+      with:
+        global-json-file: "global.json"
+
+    - name: "Check Code Formatting"
+      shell: bash
+      run: |
+        dotnet format --verify-no-changes --verbosity diagnostic --exclude-diagnostics GdUnit0501 GdUnit0502

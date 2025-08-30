@@ -1,10 +1,12 @@
 ﻿# Basics Examples
 
-Welcome to the gdUnit4Net basics! This section provides step-by-step tutorials and fundamental examples to get you started with unit testing in Godot using C#.
+Welcome to the gdUnit4Net basics! This section provides step-by-step tutorials and fundamental examples to get you started with
+unit testing in Godot using C#.
 
 ## Prerequisites
 
 To follow these examples, you need:
+
 - Basic understanding of C# programming
 - Godot 4.4+ with .NET support installed
 - .NET 9.0 SDK
@@ -13,6 +15,7 @@ To follow these examples, you need:
 ## Getting Started
 
 **New to gdUnit4Net?** Follow this learning path:
+
 1. [Minimal Setup](Setup/MinimalTestProjectSetup/README.md) - Minimal example demonstrating the simplest possible gdUnit4Net test setup
 2. [Environment Setup](Setup/RequireGodotTestProjectSetup/README.md) - Essential project configuration and environment variables
 3. [Basic Test Writing](Tests/) - Master fundamental testing patterns and techniques
@@ -21,7 +24,7 @@ To follow these examples, you need:
 
 The basic examples are organized into:
 
-```
+```shell
 ├── Setup/              # Project setup and configuration examples
 │   ├── MinimalTestProjectSetup/        # Pure .NET testing setup
 │   └── RequireGodotTestProjectSetup/   # Godot runtime testing setup
@@ -36,14 +39,18 @@ The basic examples are organized into:
 ## What Each Section Covers
 
 ### Setup/
+
 Learn how to configure different types of test projects:
+
 - **MinimalTestProjectSetup**: Testing pure .NET code without Godot dependencies
 - **RequireGodotTestProjectSetup**: Testing Godot-specific classes and functionality
 - Environment setup and configuration differences
 - Project file structure and package requirements
 
 ### Tests/
+
 Master fundamental testing concepts and patterns:
+
 - **Assertion Examples**: Using AssertThat() with different data types
 - **Test Attributes**: Understanding [TestSuite], [TestCase], lifecycle methods
 - **Simple Godot Node Test**: Basic testing of Godot objects and types
@@ -52,18 +59,21 @@ Master fundamental testing concepts and patterns:
 ## Key Concepts You'll Learn
 
 ### Project Setup
+
 - Difference between .NET-only and Godot runtime testing
 - Environment variable configuration
 - Required NuGet packages
 - Basic .csproj structure
 
 ### Testing Fundamentals
+
 - Writing your first test methods [TestCase]
 - Understanding [TestSuite] and [TestCase] attributes
 - Basic assertion patterns with AssertThat()
 - Test organization and naming conventions
 
 ### Godot-Specific Testing
+
 - Using [RequireGodotRuntime] for Godot-specific tests
 - Testing Godot objects (Vector3, Node, GodotObject)
 - Memory management with AutoFree()
@@ -80,7 +90,7 @@ Master fundamental testing concepts and patterns:
 
 ## When to Use Each Setup
 
-### Start with Basics When:
+### Start with Basics When
 
 - ✅ New to gdUnit4Net or unit testing
 - ✅ Setting up your first test project
@@ -105,13 +115,15 @@ A: Yes! Always call Free() on Godot objects in tests to prevent memory leaks.
 ## Test Execution Overview
 
 ### Pure .NET Tests (MinimalTestProjectSetup)
-```
+
+```cmd
 Build → Run Tests → Results
 ~2-5 seconds total
 ```
 
 ### Godot Runtime Tests (RequireGodotTestProjectSetup)
-```
+
+```cmd
 Build → Start Godot → Initialize Runtime → Run Tests → Results
 ~30+ seconds first run, ~10-15 seconds subsequent runs
 ```
@@ -119,6 +131,7 @@ Build → Start Godot → Initialize Runtime → Run Tests → Results
 ## Essential Testing Patterns
 
 ### Basic Assertion
+
 ```csharp
 [TestCase]
 public void BasicAssertion()
@@ -128,6 +141,7 @@ public void BasicAssertion()
 ```
 
 ### Godot Object Testing
+
 ```csharp
 [TestCase]
 [RequireGodotRuntime]
@@ -140,6 +154,7 @@ public void GodotObjectTest()
 ```
 
 ### Test Class Structure
+
 ```csharp
 [TestSuite]
 public class MyTestClass
@@ -149,20 +164,25 @@ public class MyTestClass
 }
 ```
 
-## Troubleshooting Common Issues
+## Troubleshooting
 
-**"No test is available" Error**
+### Common Issues
+
+#### "No test is available" Error
+
 - Check if GODOT_BIN environment variable is set (for Godot runtime tests)
 - Verify test methods have [TestCase] attribute
 - Ensure test class has [TestSuite] attribute
 
-**Build Errors After Project Conversion**
+#### Build Errors After Project Conversion
+
 - Delete obj/ and bin/ directories
 - Run `dotnet build` again
 
 ## Next Steps
 
 After mastering the basics:
+
 - Explore [Advanced examples](../Advanced/) for professional configurations
 - Learn about complex testing scenarios and patterns
 - Practice with your own Godot projects
@@ -171,6 +191,7 @@ After mastering the basics:
 ## Contributing Basic Examples
 
 Found something confusing or missing? We welcome contributions! Consider adding examples for:
+
 - Additional assertion types
 - Common testing scenarios
 - Beginner-friendly explanations

@@ -1,12 +1,11 @@
 name: ci-pr
 run-name: ${{ github.head_ref || github.ref_name }}-ci-pr
 
-on:
+on: # yamllint disable-line rule:truthy
   pull_request:
     paths-ignore:
-      - '**.jpg'
-      - '**.png'
-      - '**.md'
+      - "**.jpg"
+      - "**.png"
   workflow_dispatch:
 
 
@@ -19,25 +18,25 @@ jobs:
 
   setup-dotnet:
     name: "🔧 Setup .NET"
-    runs-on: 'ubuntu-24.04'
+    runs-on: "ubuntu-24.04"
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-dotnet@v4
         with:
-          global-json-file: 'global.json'
+          global-json-file: "global.json"
 
   compile:
     name: "🔨 Compile Projects"
     needs: setup-dotnet
-    runs-on: 'ubuntu-24.04'
+    runs-on: "ubuntu-24.04"
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v5
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          global-json-file: 'global.json'
+          global-json-file: "global.json"
 
       - name: "Build Projects"
         run: |
@@ -58,26 +57,17 @@ jobs:
             ${{ runner.os }}-build-${{ github.sha }}-${{ github.run_id }}
 
   style-check:
-    name: "🔍 Check Style: Examples"
-    needs: setup-dotnet
-    runs-on: 'ubuntu-24.04'
+    name: "📝 Linting & Formatting"
+    runs-on: "ubuntu-24.04"
     timeout-minutes: 2
     steps:
       - uses: actions/checkout@v5
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: 'global.json'
-
-      - name: "Check Code Formatting"
-        if: ${{ !cancelled() }}
-        run: |
-          dotnet format --verify-no-changes --verbosity diagnostic --exclude-diagnostics GdUnit0501 GdUnit0502
+      - uses: ./.github/actions/formatting_checks
 
   example-tests:
     name: "🧪 Example Tests"
     needs: compile
-    runs-on: 'ubuntu-24.04'
+    runs-on: "ubuntu-24.04"
     timeout-minutes: 3
 
     steps:
@@ -85,7 +75,7 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          global-json-file: 'global.json'
+          global-json-file: "global.json"
 
       - name: "Restore Build Cache"
         if: ${{ !cancelled() }}
@@ -102,11 +92,11 @@ jobs:
       - name: "Install Godot Net"
         uses: ./.github/actions/godot-install
         with:
-          godot-version: '4.4.1'
+          godot-version: "4.4.1"
           godot-mono: true
-          godot-status-version: 'stable'
-          godot-bin-name: 'linux_x86_64'
-          godot-cache-path: '~/godot-linux'
+          godot-status-version: "stable"
+          godot-bin-name: "linux_x86_64"
+          godot-cache-path: "~/godot-linux"
 
       - name: "Run Tests"
         if: ${{ !cancelled() }}
@@ -129,9 +119,9 @@ jobs:
 
   finalize:
     if: ${{ !cancelled() }}
-    runs-on: 'ubuntu-24.04'
+    runs-on: "ubuntu-24.04"
     name: Final Results
-    needs: [ style-check, example-tests ]
+    needs: [style-check, example-tests]
     steps:
       - run: exit 1
         if: >-

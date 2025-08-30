@@ -2,6 +2,8 @@ namespace GdUnit4.Examples.Advanced.Tests.SceneTesting;
 
 using Godot;
 
+using Scenes;
+
 using static Assertions;
 
 /// <summary>

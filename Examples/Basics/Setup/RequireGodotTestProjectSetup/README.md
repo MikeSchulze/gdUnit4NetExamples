@@ -7,6 +7,7 @@ An example demonstrating how to test Godot-specific classes and functionality th
 ## What This Example Shows
 
 This project demonstrates:
+
 - **Setting up test environment** for Godot runtime testing (GODOT_BIN)
 - **Testing Godot-derived classes** that inherit from GodotObject, Node, etc.
 - **Using [RequireGodotRuntime]** attribute for tests that need Godot's runtime
@@ -20,17 +21,20 @@ This project demonstrates:
 Tests that use `[RequireGodotRuntime]` need the Godot executable to be available. Set the `GODOT_BIN` environment variable:
 
 **Windows:**
+
 ```cmd
 set GODOT_BIN=C:\path\to\Godot_v4.4.1-stable_mono_win64.exe
 ```
 
 **Linux/macOS:**
+
 ```bash
 export GODOT_BIN=/path/to/Godot_v4.4.1-stable_mono_linux64
 ```
 
 **Without this environment variable, you'll see:**
-```
+
+```cmd
 Godot runtime is not configured. The environment variable 'GODOT_BIN' is not set or empty. 
 Please set it to the Godot executable path.
 No test is available in [...].dll
@@ -73,13 +77,13 @@ No test is available in [...].dll
 **⚠️ Important**: Test execution will take longer than regular .NET tests due to Godot runtime overhead:
 
 - **First Run**: Expect 30+ seconds as gdUnit4Net will:
-    - Install the test runner to `RequireGodotTestProjectSetup/gdunit4_testadapter_v5/` (from gdUnit4.api package)
-    - Recompile the project with the test adapter
+  - Install the test runner to `RequireGodotTestProjectSetup/gdunit4_testadapter_v5/` (from gdUnit4.api package)
+  - Recompile the project with the test adapter
 
 - **Subsequent Runs**: Still slower than pure .NET tests (~10-15 seconds) because:
-    - Godot editor needs to start and initialize
-    - Test runner must load the Godot runtime environment
-    - Each test requiring `[RequireGodotRuntime]` runs in the Godot context
+  - Godot editor needs to start and initialize
+  - Test runner must load the Godot runtime environment
+  - Each test requiring `[RequireGodotRuntime]` runs in the Godot context
 
 This is normal behavior - the trade-off for being able to test Godot-specific functionality.
 
@@ -99,6 +103,7 @@ Always call `Free()` on Godot objects after testing to prevent memory leaks.
 ## Next Steps
 
 After understanding Godot runtime testing:
+
 - Explore testing Nodes and Scenes in [Advanced examples](../../Advanced/)
 - See real-world Godot testing in the [Demos](../../../Demos/) folder
 - Learn about testing signals and Godot-specific functionality
