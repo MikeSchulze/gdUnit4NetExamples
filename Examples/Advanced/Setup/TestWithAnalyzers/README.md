@@ -5,15 +5,17 @@ An advanced example demonstrating how to use gdUnit4Net analyzers to catch commo
 ## What This Example Shows
 
 This project demonstrates:
+
 - **Compile-time error detection** using gdUnit4.analyzers
 - **Static analysis** to prevent runtime test failures
 - **Best practice enforcement** with automatic code validation
 - **IDE integration** with real-time feedback and quick fixes
 - **Developer productivity improvements** through early error detection
 
-## Why Use gdUnit4.analyzers?
+## Why Use gdUnit4.analyzers ?
 
-### Advantages of Compile-Time Analysis:
+### Advantages of Compile-Time Analysis
+
 - **Catch Errors Early**: Detect mistakes during compilation, not at runtime
 - **Clear Error Messages**: Get specific, actionable feedback about what's wrong
 - **IDE Integration**: Real-time warnings and suggestions as you type
@@ -21,7 +23,8 @@ This project demonstrates:
 - **Reduce Debugging Time**: Prevent common mistakes before they cause test failures
 - **Team Consistency**: Enforce coding standards across all developers
 
-### When to Use:
+### When to Use
+
 - ✅ Teams wanting to enforce gdUnit4Net best practices automatically
 - ✅ Projects requiring high test reliability and quality
 - ✅ Developers who want immediate feedback on testing mistakes
@@ -37,6 +40,7 @@ This project demonstrates:
 ## Key Analyzer Features
 
 ### 1. Missing [RequireGodotRuntime] Detection
+
 ```csharp
 // ❌ ANALYZER ERROR: Missing attribute when using Godot types
 [TestCase]
@@ -57,6 +61,7 @@ public void IsNodeNotNull()             // Analyzer approves this pattern
 ```
 
 ### 2. DataPoint and TestCase Validation
+
 ```csharp
 // ❌ ANALYZER ERROR: Invalid attribute combination
 [TestCase]
@@ -70,6 +75,7 @@ public void ValidTest() { }
 ```
 
 ### 3. Pure C# Test Validation
+
 ```csharp
 // ✅ CORRECT: Pure C# test doesn't need special attributes
 [TestCase]
@@ -83,6 +89,7 @@ public void TestPureCSharpObject()      // No Godot types = no warnings
 ## Analyzer Rules
 
 ### Core Rules
+
 | Rule ID | Description | Severity |
 |---------|-------------|----------|
 | **GdUnit0201** | Multiple TestCase attributes not allowed with DataPoint | Error |
@@ -90,6 +97,7 @@ public void TestPureCSharpObject()      // No Godot types = no warnings
 | **GdUnit0501** | Godot Runtime Required for Test Method | Error |
 
 ### What Gets Analyzed
+
 - **Godot Type Detection**: Node, Vector3, PackedScene, Resource, etc.
 - **Attribute Validation**: [RequireGodotRuntime], [TestCase], [TestSuite], [DataPoint]
 - **Attribute Combinations**: Prevents invalid combinations like multiple [TestCase] with [DataPoint]
@@ -98,18 +106,21 @@ public void TestPureCSharpObject()      // No Godot types = no warnings
 ## IDE Integration
 
 ### Visual Studio
+
 - **Real-time Analysis**: Squiggly underlines appear as you type
 - **Error List Integration**: All analyzer messages appear in Error List
 - **Quick Fixes**: Right-click → Quick Actions and Refactorings
 - **Build Integration**: Errors prevent successful compilation
 
 ### JetBrains Rider
+
 - **Inline Diagnostics**: Immediate feedback with detailed explanations
 - **Solution-wide Analysis**: Check entire solution for issues
 - **Inspection Results**: Dedicated tool window for all analyzer findings
 - **Context Actions**: Alt+Enter for quick fixes
 
 ### VS Code
+
 - **OmniSharp Integration**: Real-time diagnostics via C# extension
 - **Problems Panel**: All analyzer messages grouped by severity
 - **Code Actions**: Lightbulb icon for available fixes
@@ -118,7 +129,9 @@ public void TestPureCSharpObject()      // No Godot types = no warnings
 ## Configuration Options
 
 ### Enable/Disable Specific Rules
+
 Create `.editorconfig` in your project root:
+
 ```ini
 [*.cs]
 # Promote errors to warnings for stricter enforcement
@@ -129,7 +142,9 @@ dotnet_diagnostic.GdUnit0201.severity = none
 ```
 
 ### Project-Level Configuration
+
 Add to your `.csproj`:
+
 ```xml
 <PropertyGroup>
   <!-- Treat all analyzer warnings as errors -->
@@ -141,7 +156,9 @@ Add to your `.csproj`:
 ```
 
 ### Ruleset Files
+
 For complex projects, use `.ruleset` files:
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="gdUnit4Net Rules" ToolsVersion="16.0">
@@ -156,7 +173,9 @@ For complex projects, use `.ruleset` files:
 ## Common Scenarios
 
 ### Scenario 1: New Developer Onboarding
+
 **Without Analyzers:**
+
 ```csharp
 [TestCase]  // Missing [RequireGodotRuntime]
 public void TestNode() 
@@ -165,21 +184,27 @@ public void TestNode()
     AssertThat(node).IsNotNull();
 }
 ```
-*Result: Confusing runtime errors, debugging sessions, frustrated developers*
+
+Result: *Confusing runtime errors, debugging sessions, frustrated developers*
 
 **With Analyzers:**
-```
+
+```cmd
 Error GdUnit0501: Test method 'TestNode' uses Godot types but is missing [RequireGodotRuntime] attribute
 ```
-*Result: Clear compile-time error with exact fix instructions*
+
+Result: *Clear compile-time error with exact fix instructions*
 
 ### Scenario 2: Refactoring Existing Tests
+
 When converting pure C# tests to use Godot types:
+
 - Analyzer immediately flags missing attributes
 - Provides suggestions for proper patterns
 - Prevents accidental runtime failures
 
 ### Scenario 3: CI/CD Integration
+
 ```bash
 # Build fails fast with clear analyzer errors
 dotnet build
@@ -190,27 +215,32 @@ dotnet build
 ## Performance Impact
 
 ### Compile Time
+
 - **Minimal Overhead**: Analyzers add ~5-10% to build time
 - **Incremental Analysis**: Only changed files are re-analyzed
 - **Parallel Execution**: Runs alongside normal compilation
 
 ### Runtime
+
 - **No Impact**: Analyzers only run during compilation
 - **Better Performance**: Prevents runtime errors that slow down test execution
 
 ## Troubleshooting
 
 **Analyzers not running?**
+
 - Verify `gdUnit4.analyzers` package is installed
 - Check IDE extensions are up to date
 - Restart IDE after adding analyzer package
 
 **False positives?**
+
 - Review analyzer rules documentation
 - Configure specific rules in `.editorconfig`
 - Report issues to gdUnit4Net repository
 
 **Missing errors in IDE but showing in build?**
+
 - Clear Visual Studio ComponentModelCache
 - Reload project files in IDE
 - Check OmniSharp restart in VS Code
@@ -229,6 +259,7 @@ dotnet build
 ## Next Steps
 
 After mastering analyzers:
+
 - Explore advanced .editorconfig rules
 - Set up custom analyzer configurations per environment
 - Integrate with code quality tools (SonarQube, etc.)

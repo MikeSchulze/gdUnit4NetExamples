@@ -7,6 +7,7 @@ A minimal example demonstrating the simplest possible gdUnit4Net test setup in a
 ## What This Example Shows
 
 This project demonstrates:
+
 - **Minimal project structure** for gdUnit4Net testing
 - **Basic .csproj configuration** with essential properties and packages
 - **Simple test class** with a basic assertion
@@ -34,6 +35,7 @@ This project demonstrates:
 ## Next Steps
 
 After understanding this minimal setup:
+
 - Explore more assertion types in the [Basics/Tests](../../Tests/) folder
 - See real-world examples in the [Demos](../../../Demos/) folder
 - Check the [Advanced](../../Advanced/) examples for complex scenarios

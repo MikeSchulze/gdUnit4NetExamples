@@ -1,10 +1,12 @@
 ﻿# Examples
 
-Welcome to the gdUnit4Net examples! This section contains hands-on examples and tutorials to help you learn unit testing with gdUnit4Net in Godot.
+Welcome to the gdUnit4Net examples! This section contains hands-on examples and tutorials to help you learn unit testing
+with gdUnit4Net in Godot.
 
 ## Getting Started
 
 **New to gdUnit4Net?** Start here:
+
 1. [Basics](Basics/README.md) - Basic step-by-step tutorials and fundamental examples to get you started with unit testing
 2. [Advanced](Advanced/README.md) - Ophisticated testing techniques, professional configurations, and complex scenarios
 3. [Demos](../Demos/) - Complete project examples
@@ -13,7 +15,7 @@ Welcome to the gdUnit4Net examples! This section contains hands-on examples and 
 
 The examples are organized into the following structure:
 
-```
+```shell
 ├── Basics/                   # Beginner examples and tutorials
 │   ├── Setup/                # Project setup examples
 │   └── Tests/                # Basic unit test patterns and techniques
@@ -28,27 +30,34 @@ The examples are organized into the following structure:
 ## What Each Section Contains
 
 ### Basics/
+
 Perfect for developers new to unit testing or gdUnit4Net:
+
 - Setting up your first test project
 - Writing simple assertions
 - Understanding test attributes and lifecycle
 - Testing basic Godot objects and .NET types
 
 ### Advanced/
+
 For developers ready to tackle complex scenarios:
+
 - Advanced test configurations
 - Mocking and test doubles
 - Testing async operations
 - Performance and integration testing
 
 ### Demos/
+
 Real-world examples showing complete projects with comprehensive test suites:
+
 - **MenuDemo2D**: UI testing, button interactions, menu navigation
 - **RoomDemo3D**: 3D physics, player movement, collision detection
 
 ## Running the Examples
 
 Before you start, you need to clone the repository.
+
 ```bash
 git clone https://github.com/MikeSchulze/gdUnit4NetExamples.git
 cd gdUnit4NetExamples
@@ -94,6 +103,7 @@ dotnet build
 ## Next Steps
 
 After running the examples:
+
 - Explore the [detailed documentation](../docs/) for in-depth guides
 - Check out the [gdUnit4Net API documentation](https://github.com/MikeSchulze/gdUnit4Net)
 - Try creating your own tests based on the patterns you've learned

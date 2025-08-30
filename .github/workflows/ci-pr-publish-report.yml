@@ -1,13 +1,13 @@
-name: 'Publish Test Report'
-on:
+name: "Publish Test Report"
+on: # yamllint disable-line rule:truthy
   workflow_run:
-    workflows: [ 'ci-pr' ]  # runs after ci-pr workflow
+    workflows: ["ci-pr"]  # runs after ci-pr workflow
     types:
       - completed
   workflow_dispatch:
     inputs:
       workflow_run_id:
-        description: 'ID of the workflow run to download artifacts from.'
+        description: "ID of the workflow run to download artifacts from."
         required: true
         default: ''
 
@@ -37,8 +37,8 @@ jobs:
         uses: dorny/test-reporter@v2.1.1
         with:
           name: example_report
-          path: '**.trx'
+          path: "**.trx"
           reporter: dotnet-trx
-          fail-on-error: 'false'
-          fail-on-empty: 'false'
-          use-actions-summary: 'false'
+          fail-on-error: "false"
+          fail-on-empty: "false"
+          use-actions-summary: "false"

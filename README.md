@@ -3,7 +3,8 @@
   <img src="assets/wip.png" alt="" width="50%"></br>
 </p>
 
-This repository contains example projects and test cases demonstrating how to use [gdUnit4Net](https://github.com/MikeSchulze/gdUnit4Net), a C# unit testing framework for Godot 4.
+This repository contains example projects and test cases demonstrating how to use [gdUnit4Net](https://github.com/MikeSchulze/gdUnit4Net),
+a C# unit testing framework for Godot4.
 
 ## Table of Contents
 
@@ -11,10 +12,10 @@ This repository contains example projects and test cases demonstrating how to us
 - [Requirements & Prerequisites](#requirements--prerequisites)
 - [Installation](#installation)
 - [Code Quality and Best Practices](#code-quality-and-best-practices)
-    - [Build Configuration](#build-configuration)
-    - [Code Style Enforcement](#code-style-enforcement)
-    - [Documentation Practices](#documentation-practices)
-    - [IDE Integration](#ide-integration)
+  - [Build Configuration](#build-configuration)
+  - [Code Style Enforcement](#code-style-enforcement)
+  - [Documentation Practices](#documentation-practices)
+  - [IDE Integration](#ide-integration)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -32,9 +33,9 @@ To work with this project, you'll need:
 - **Godot Engine**: Version 4.4.x with .NET/Mono support enabled
 - **.NET SDK**: Version 9.0.x
 - **IDE**: One of the following:
-    - Visual Studio 2022
-    - Visual Studio Code with C# extension
-    - JetBrains Rider (recommended for best testing experience)
+  - Visual Studio 2022
+  - Visual Studio Code with C# extension
+  - JetBrains Rider (recommended for best testing experience)
 
 ### Project Specifications
 
@@ -50,17 +51,20 @@ To work with this project, you'll need:
 ### Setup Steps
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/MikeSchulze/gdUnit4NetExamples.git
    cd gdUnit4NetExamples
    ```
 
 2. **Verify your installed .NET SDKs**
+
    ```bash
    dotnet --list-sdks
     7.0.404 [C:\Program Files\dotnet\sdk]
     8.0.411 [C:\Program Files\dotnet\sdk]
    ```
+
    Ensure .NET 9.0.x is listed among the installed SDKs.
 
    **If .NET 9.0 is not installed:**
@@ -70,6 +74,7 @@ To work with this project, you'll need:
    b. Follow the installation instructions for your operating system
 
    c. After installation, verify with:
+
    ```bash
    dotnet --list-sdks
     7.0.404 [C:\Program Files\dotnet\sdk]
@@ -78,9 +83,11 @@ To work with this project, you'll need:
    ```
 
 3. **Build the project**
+
    ```bash
    dotnet build
    ```
+
    This will restore all required NuGet packages and build the project.
 
 ---
@@ -89,14 +96,15 @@ To work with this project, you'll need:
 
 ## Code Quality and Best Practices
 
-This example project demonstrates not only how to use GdUnit4Net for testing but also showcases best practices for maintaining high-quality C# code in Godot projects.
+This example project demonstrates not only how to use GdUnit4Net for testing but also showcases best practices for maintaining high-quality
+C# code in Godot projects.
 
 ### Build Configuration
 
 #### Directory.Build.props
 
-We use a `Directory.Build.props` file to centralize common build settings across all projects. This ensures consistent code quality enforcement without having to duplicate settings
-in each project file.
+We use a `Directory.Build.props` file to centralize common build settings across all projects.
+This ensures consistent code quality enforcement without having to duplicate settings in each project file.
 
 Key features:
 
@@ -121,8 +129,8 @@ Key features:
 
 #### .editorconfig
 
-The repository includes a comprehensive `.editorconfig` file that defines coding standards. This file is automatically recognized by Visual Studio, VS Code, Rider, and other
-editors that support the EditorConfig standard.
+The repository includes a comprehensive `.editorconfig` file that defines coding standards.
+This file is automatically recognized by Visual Studio, VS Code, Rider, and other editors that support the EditorConfig standard.
 
 Benefits:
 

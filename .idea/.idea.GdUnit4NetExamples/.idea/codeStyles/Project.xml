@@ -5,6 +5,8 @@
         <option name="USE_TAB_CHARACTER" value="true" />
       </value>
     </option>
+    <option name="RIGHT_MARGIN" value="180" />
+    <option name="SOFT_MARGINS" value="140,180" />
     <stylecop>
       <option name="ENABLED" value="true" />
     </stylecop>
