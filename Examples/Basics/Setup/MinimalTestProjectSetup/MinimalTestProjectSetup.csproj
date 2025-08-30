@@ -47,7 +47,7 @@
         gdUnit4Net API - provides the testing framework classes, attributes, and assertions
         Contains [TestSuite], [TestCase], AssertThat(), and other core testing functionality
     -->
-    <PackageReference Include="gdUnit4.api" Version="5.1.0-alpha1"/>
+    <PackageReference Include="gdUnit4.api" Version="5.1.0-alpha2"/>
 
     <!--
         gdUnit4Net test adapter - enables test discovery and execution in IDEs and CI/CD

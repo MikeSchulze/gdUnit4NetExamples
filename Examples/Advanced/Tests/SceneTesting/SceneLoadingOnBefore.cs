@@ -81,7 +81,7 @@ public class SceneLoadingOnBefore : IDisposable
     public void SetupScene()
     {
         // Load scene once for the entire test suite with automatic cleanup
-        runner = ISceneRunner.Load("res://SceneTesting/Scenes/TestSceneWithButton.tscn", true);
+        runner = ISceneRunner.Load("res://Resources/TestSceneWithButton.tscn", true);
 
         // Verify successful scene loading and runner initialization
         AssertThat(runner).IsNotNull();

@@ -30,10 +30,9 @@ The advanced examples are organized into:
 │   └── TestWithAnalyzers/      # Compile-time validation and code analysis 
 └── Tests/              # Complex testing scenarios and patterns
     ├── SignalTesting/          # Testing Godot signals and events
-    ├── SceneTesting/        # Loading and testing scenes
-    ├── AsyncTesting/           # Testing async operations
+    ├── SceneTesting/           # Loading and testing scenes
+    ├── InputTesting/           # Testing user inputs like key mouse operations
     ├── MockingAndStubs/        # Test doubles and dependency injection
-    └── PerformanceTesting/     # Benchmarking and performance validation
 ```
 
 ## What Each Section Covers
@@ -61,9 +60,8 @@ Advanced testing patterns and complex scenarios:
 
 - **Signal Testing**: Verifying Godot signal emissions and connections
 - **Scene Management**: Loading, instantiating, and testing complex scenes
-- **Async Testing**: Handling coroutines, timers, and async operations
+- **Input Testing**: Testing user inputs like key mouse operations
 - **Mocking and Stubs**: Using test doubles for isolated unit testing
-- **Performance Testing**: Benchmarking and validating performance requirements
 
 ## Key Concepts You'll Learn
 
