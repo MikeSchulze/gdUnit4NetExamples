@@ -176,5 +176,5 @@ After mastering advanced techniques:
 
 ## Contributing Advanced Examples
 
-Have an advanced testing scenario not covered here? 
+Have an advanced testing scenario not covered here?
 We welcome contributions!

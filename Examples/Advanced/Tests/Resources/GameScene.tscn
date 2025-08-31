@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://dvroetiinwibd"]
+
+[ext_resource type="Script" path="res://Resources/GameScene.cs" id="1_81usr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3e770"]
+size = Vector2(356.189, 15.3764)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3e770"]
+radius = 20.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_81usr"]
+radius = 20.0
+height = 40.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_81usr"]
+
+[node name="GameScene" type="Node2D"]
+script = ExtResource("1_81usr")
+
+[node name="EbeneA" type="Line2D" parent="."]
+points = PackedVector2Array(96, 173, 442, 260)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="EbeneA"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EbeneA/StaticBody2D"]
+position = Vector2(258.255, 217.383)
+rotation = 0.254089
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_3e770")
+
+[node name="EbeneB" type="Line2D" parent="."]
+position = Vector2(181, 431)
+rotation = -0.679311
+points = PackedVector2Array(96, 173, 442, 260)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="EbeneB"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EbeneB/StaticBody2D"]
+position = Vector2(268.176, 219.959)
+rotation = 0.254089
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_3e770")
+
+[node name="Ball" type="RigidBody2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(168, 93)
+inertia = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_3e770")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Ball/CollisionShape2D"]
+mesh = SubResource("SphereMesh_81usr")
+
+[node name="Ground" type="Area2D" parent="."]
+position = Vector2(436, 646)
+scale = Vector2(42.7678, -2.25435)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_81usr")
+
+[connection signal="body_entered" from="Ground" to="." method="OnGroundEntered"]
