@@ -116,6 +116,11 @@ public partial class TestSceneWithButton : Control
     public Key LastKeyPressed { get; private set; }
 
     /// <summary>
+    ///     Gets or sets a value indicating whether if set to true an exception will be thrown at scene processing.
+    /// </summary>
+    private bool LetsThrowAnException { get; set; }
+
+    /// <summary>
     ///     Scene initialization method that establishes signal connections.
     ///     This method demonstrates the standard Godot pattern for connecting signals
     ///     to methods during scene setup, creating the workflow chain that enables
@@ -196,7 +201,19 @@ public partial class TestSceneWithButton : Control
                 LastKeyPressed = keyEvent.Keycode;
                 if (keyEvent.Keycode == Key.Space)
                     EmitSignal(SignalName.GameStarted);
+                if (keyEvent.Keycode == Key.E)
+                    LetsThrowAnException = true;
             }
+        }
+    }
+
+    /// <inheritdoc />
+    public override void _Process(double delta)
+    {
+        if (LetsThrowAnException)
+        {
+            ThrowTestException();
+            LetsThrowAnException = false;
         }
     }
 
@@ -230,6 +247,24 @@ public partial class TestSceneWithButton : Control
     /// </summary>
     public void OnButtonPressed()
         => EmitSignal(SignalName.GameStarted);
+
+    /// <summary>
+    ///     Test method that throws an exception for Godot exception testing scenarios.
+    ///     This method is specifically designed to test exception handling in Godot contexts
+    ///     and validates that exceptions thrown from scene methods are properly caught.
+    ///     Testing Purpose:
+    ///     • Demonstrates exception testing patterns in scene methods
+    ///     • Validates GdUnit4Net's exception monitoring capabilities
+    ///     • Tests exception reporting and stack trace accuracy
+    ///     • Provides controlled exception scenario for testing
+    ///     Exception Details:
+    ///     • Throws InvalidOperationException with descriptive message
+    ///     • Used in conjunction with [ThrowsException] attribute
+    ///     • Helps test Godot-specific exception handling patterns.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Always thrown to test exception handling.</exception>
+    public void ThrowTestException()
+        => throw new InvalidOperationException("Method execution failed");
 
     /// <summary>
     ///     Asynchronous workflow method that simulates game processing with timer delay.

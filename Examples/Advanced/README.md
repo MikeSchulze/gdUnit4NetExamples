@@ -29,10 +29,10 @@ The advanced examples are organized into:
 │   ├── TestWithRunsettings/    # Professional test settings configuration
 │   └── TestWithAnalyzers/      # Compile-time validation and code analysis 
 └── Tests/              # Complex testing scenarios and patterns
-    ├── SignalTesting/          # Testing Godot signals and events
-    ├── SceneTesting/           # Loading and testing scenes
-    ├── InputTesting/           # Testing user inputs like key mouse operations
-    ├── MockingAndStubs/        # Test doubles and dependency injection
+    ├── SceneTesting/           # Scene loading, lifecycle, and interaction testing
+    ├── InputTesting/           # Mouse, keyboard, and user input simulation
+    ├── SignalTesting/          # Signal emission, monitoring, and workflow testing
+    └── ExceptionTesting/       # Standard and Godot-specific exception handling
 ```
 
 ## What Each Section Covers
@@ -58,10 +58,27 @@ Professional project configurations for production-ready test environments:
 
 Advanced testing patterns and complex scenarios:
 
-- **Signal Testing**: Verifying Godot signal emissions and connections
-- **Scene Management**: Loading, instantiating, and testing complex scenes
-- **Input Testing**: Testing user inputs like key mouse operations
-- **Mocking and Stubs**: Using test doubles for isolated unit testing
+- **Scene Testing**: Loading, managing, and testing Godot scenes
+  - Suite-level vs per-test scene loading strategies
+  - Scene lifecycle management and memory optimization
+
+- **Input Testing**: Comprehensive user input simulation and validation
+  - Mouse input: positioning, clicking, hover detection
+  - Keyboard input: key combinations, modifiers, text input processing
+  - Input state validation through both Godot's Input singleton and scene properties
+  - UI element interaction testing with precise event simulation
+
+- **Signal Testing**: Godot signal communication and workflow validation
+  - Basic signal emission and monitoring with timeout handling
+  - Signal chaining and asynchronous workflow testing
+  - Signal parameter validation and emission counting
+  - Integration between input events and signal-driven game logic
+
+- **Exception Testing**: Robust error handling and exception validation
+  - Standard C# exception testing (ArgumentException, NullReferenceException, etc.)
+  - Godot-specific exception monitoring with [GodotExceptionMonitor] attribute
+  - Silent exception detection during frame processing and node lifecycle
+  - Integration between Godot error reporting (GD.PushError) and test failures
 
 ## Key Concepts You'll Learn
 
@@ -81,10 +98,11 @@ Advanced testing patterns and complex scenarios:
 
 ### Testing Strategies
 
+- Scene-based testing patterns for UI and game logic
+- Input simulation for realistic user interaction testing
+- Signal-driven architecture testing and validation
+- Exception monitoring for robust error handling
 - Isolation techniques for complex dependencies
-- Testing interactions between multiple systems
-- Handling Godot-specific async patterns
-- Performance and load testing approaches
 
 ### Production Readiness
 
@@ -98,7 +116,7 @@ Advanced testing patterns and complex scenarios:
 | Level | Focus | Examples |
 |-------|-------|----------|
 | **Basics** | Learning fundamentals | Simple assertions, basic setup |
-| **Advanced** | Professional techniques | Configuration management, static analysis, complex scenarios |
+| **Advanced** | Professional techniques | Configuration management, static analysis, complex testing scenarios |
 
 ## When to Use Advanced Techniques
 
@@ -120,10 +138,20 @@ Advanced testing patterns and complex scenarios:
 
 ### Use Advanced Testing When
 
-- ✅ Testing complex interactions between systems
-- ✅ Need to isolate dependencies
-- ✅ Testing performance-critical code
-- ✅ Working with large, complex scenes
+- ✅ Testing complex Godot scenes with multiple components
+- ✅ Validating user input handling and UI interactions
+- ✅ Testing signal-driven game logic and communication patterns
+- ✅ Need comprehensive exception handling and error recovery testing
+- ✅ Working with large, complex game systems requiring isolation
+
+## Testing Patterns Overview
+
+| Pattern | Use Case | Key Benefits |
+|---------|----------|--------------|
+| **Scene Testing** | UI components, game objects | Realistic testing environment, component integration |
+| **Input Testing** | User interactions, controls | Precise input simulation, state validation |
+| **Signal Testing** | Event-driven logic, workflows | Communication pattern validation, timing verification |
+| **Exception Testing** | Error handling, robustness | Silent failure detection, comprehensive error coverage |
 
 ## Setup Examples Comparison
 
@@ -142,16 +170,11 @@ After mastering advanced techniques:
 
 - Apply learned concepts to your own projects
 - Combine .runsettings configuration with analyzer validation
-- Contribute your own advanced examples
+- Integrate scene, input, signal, and exception testing patterns
 - Explore integration with external testing tools
 - Share your testing strategies with the community
 
 ## Contributing Advanced Examples
 
-Have an advanced testing scenario not covered here? We welcome contributions! Consider adding examples for:
-
-- Custom test adapters
-- Integration with external tools
-- Advanced CI/CD configurations
-- Performance profiling techniques
-- Custom analyzer rules
+Have an advanced testing scenario not covered here? 
+We welcome contributions!
