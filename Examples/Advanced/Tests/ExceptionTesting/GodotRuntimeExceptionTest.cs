@@ -1,4 +1,4 @@
-﻿namespace GdUnit4.Examples.Advanced.Tests.ExceptionTesting;
+namespace GdUnit4.Examples.Advanced.Tests.ExceptionTesting;
 
 using Core.Execution.Exceptions;
 

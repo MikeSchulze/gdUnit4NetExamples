@@ -1,4 +1,4 @@
-﻿namespace GdUnit4.Examples.Advanced.Tests.Resources;
+namespace GdUnit4.Examples.Advanced.Tests.Resources;
 
 using Godot;
 

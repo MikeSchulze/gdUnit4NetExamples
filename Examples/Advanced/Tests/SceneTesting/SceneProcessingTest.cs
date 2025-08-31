@@ -1,4 +1,4 @@
-﻿namespace GdUnit4.Examples.Advanced.Tests.SceneTesting;
+namespace GdUnit4.Examples.Advanced.Tests.SceneTesting;
 
 using Resources;
 
