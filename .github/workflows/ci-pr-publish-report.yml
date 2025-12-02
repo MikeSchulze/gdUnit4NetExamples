@@ -20,13 +20,13 @@ jobs:
   publish-reports:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           sparse-checkout: .github
 
       # publish Analyzer Tests results
       - name: Download test artifacts
-        uses: actions/download-artifact@v5.0.0
+        uses: actions/download-artifact@v6.0.0
         with:
           name: example_report
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -34,7 +34,7 @@ jobs:
           run-id: ${{ github.event.inputs.workflow_run_id || github.event.workflow_run.id }}
 
       - name: Publish API Test Results
-        uses: dorny/test-reporter@v2.1.1
+        uses: dorny/test-reporter@v2.2.0
         with:
           name: example_report
           path: "**.trx"
