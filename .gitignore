@@ -25,3 +25,4 @@ TestResults/
 gdunit4_testadapter*/
 **GdUnitRunner_*.cfg
 GdUnit4NetExamples.sln.DotSettings.user
+.idea
