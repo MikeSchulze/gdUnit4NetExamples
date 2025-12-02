@@ -2,7 +2,7 @@
     Test project for gdUnit4Net - uses Godot.NET.Sdk to integrate with Godot's build system
     This enables testing of Godot-specific types and functionality
 -->
-<Project Sdk="Godot.NET.Sdk/4.4.1">
+<Project Sdk="Godot.NET.Sdk/4.5.0">
 
   <PropertyGroup>
     <!-- Target framework -->
@@ -41,7 +41,7 @@
         gdUnit4Net API - provides the testing framework classes, attributes, and assertions
         Contains [TestSuite], [TestCase], AssertThat(), and other core testing functionality
     -->
-    <PackageReference Include="gdUnit4.api" Version="5.1.0-alpha2"/>
+    <PackageReference Include="gdUnit4.api" Version="5.1.0-rc3"/>
     <!--
         gdUnit4Net test adapter - enables test discovery and execution in IDEs and CI/CD
         Allows Visual Studio, Rider, and dotnet test to find and run gdUnit4Net tests

@@ -3,21 +3,31 @@
     This enables testing of Godot-specific types and functionality
 -->
 <Project Sdk="Godot.NET.Sdk/4.5.0">
+
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <LangVersion>12.0</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <RootNamespace>GdUnit4.Examples.Advanced.Setup.TestWithRunsettings</RootNamespace>
+    <RootNamespace>namespace GdUnit4.Examples.Advanced.Setup.MultiProjectSetup</RootNamespace>
   </PropertyGroup>
+
   <PropertyGroup>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <TestFramework>GdUnit4</TestFramework>
   </PropertyGroup>
+
   <ItemGroup>
+    <ProjectReference Include="../ExampleProject/ExampleProject.csproj"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1"/>
     <PackageReference Include="gdUnit4.api" Version="5.1.0-rc3"/>
     <PackageReference Include="gdUnit4.test.adapter" Version="3.0.0"/>
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Include=".runsettings"/>
+    <Content Include="project.godot"/>
+  </ItemGroup>
+
 </Project>
