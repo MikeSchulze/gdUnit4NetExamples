@@ -11,8 +11,8 @@ public class ExampleSceneTest
     [TestCase]
     public async Task SceneLoading()
     {
-        // Example to load a scene by resource path, set autoFree to true
-        var runner = ISceneRunner.Load("res://../ExampleProject/src/ExampleScene.tscn", true);
+        // Example to load a scene by resource path form subproject 'ExampleProject'
+        var runner = ISceneRunner.Load("res://ExampleProject/src/ExampleScene.tscn", true);
 
         GD.Print("Loading scene...");
         runner.MaximizeView();

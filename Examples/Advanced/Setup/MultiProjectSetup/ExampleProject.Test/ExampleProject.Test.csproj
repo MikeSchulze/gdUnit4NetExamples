@@ -5,29 +5,84 @@
 <Project Sdk="Godot.NET.Sdk/4.5.0">
 
   <PropertyGroup>
+    <!-- Disable Central Package Management for Godot projects -->
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
     <TargetFramework>net9.0</TargetFramework>
     <LangVersion>12.0</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <RootNamespace>namespace GdUnit4.Examples.Advanced.Setup.MultiProjectSetup</RootNamespace>
+    <RootNamespace>GdUnit4.Examples.Advanced.Setup.MultiProjectSetup</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
+    <!-- Ensures all dependencies are copied to output for test execution -->
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <!-- Identifies this as a GdUnit4 test project for test discovery -->
     <TestFramework>GdUnit4</TestFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Reference to the main project being tested -->
     <ProjectReference Include="../ExampleProject/ExampleProject.csproj"/>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1"/>
+    <!-- Core .NET testing infrastructure -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1"/>
+    <!-- GdUnit4 testing framework for Godot -->
     <PackageReference Include="gdUnit4.api" Version="5.1.0-rc3"/>
+    <!-- Test adapter to integrate GdUnit4 with .NET test runners -->
     <PackageReference Include="gdUnit4.test.adapter" Version="3.0.0"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include=".runsettings"/>
-    <Content Include="project.godot"/>
+    <Content Include=".gitignore"/>
   </ItemGroup>
 
+  <!--
+    ============================================================
+    SYMBOLIC LINK CREATION TARGET
+    ============================================================
+    WHY WE CREATE A SYMLINK:
+
+    When testing Godot projects, resource paths are critical. Godot uses paths like:
+    - "res://ExampleProject/src/ExampleScene.tscn"
+    - "res://ExampleProject/assets/sprite.png"
+
+    These paths are relative to the project root. If we just reference the main project
+    normally, the resources won't be at the expected paths in the test project.
+
+    The symlink solves this by creating a virtual "ExampleProject" folder inside the
+    test project that points to the actual ExampleProject folder. This preserves the
+    exact same file structure and paths that the main project uses.
+
+    BENEFITS:
+    1. Resources load correctly using their original paths
+    2. No need to copy files (saves disk space)
+    3. Changes to main project are immediately reflected in tests
+    4. Scene loading and resource references work identically to runtime
+
+    WITHOUT SYMLINK: GD.Load("res://ExampleProject/src/ExampleScene.tscn") would fail
+    WITH SYMLINK: GD.Load("res://ExampleProject/src/ExampleScene.tscn") works perfectly
+    ============================================================
+  -->
+  <Target Name="CreateSymlink" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <!-- Get absolute path to the main ExampleProject directory -->
+      <SymlinkSource>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/../ExampleProject'))</SymlinkSource>
+      <!-- Create symlink as 'ExampleProject' folder in test project root -->
+      <SymlinkTarget>$(MSBuildProjectDirectory)/ExampleProject</SymlinkTarget>
+    </PropertyGroup>
+
+    <!-- Windows: Create directory symbolic link (requires admin or developer mode) -->
+    <Exec Command="if not exist &quot;$(SymlinkTarget)&quot; mklink /D &quot;$(SymlinkTarget)&quot; &quot;$(SymlinkSource)&quot;"
+          Condition="'$(OS)' == 'Windows_NT'"
+          ContinueOnError="true"/>
+
+    <!-- Unix/Linux/Mac: Create symbolic link -->
+    <Exec Command="[ ! -L '$(SymlinkTarget)' ] &amp;&amp; ln -s '$(SymlinkSource)' '$(SymlinkTarget)' || true"
+          Condition="'$(OS)' != 'Windows_NT'"
+          ContinueOnError="true"/>
+
+    <!-- Log confirmation message -->
+    <Message Text="Symlink created/verified: $(SymlinkTarget) -> $(SymlinkSource)" Importance="high"/>
+  </Target>
 </Project>
