@@ -5,6 +5,7 @@
     <Rule Id="SA1135" Action="None"/> <!-- Disable A using directive is not qualified. Rules-->
     <Rule Id="SA1503" Action="None"/> <!-- Disable BracesMustNotBeOmitted -->
     <Rule Id="SA1520" Action="None"/> <!-- Disable The opening and closing braces of a chained Rules-->
+    <Rule Id="SA1633" Action="None"/> <!-- Disable File should have header-->
 
     <Rule Id="SA1201" Action="Error"/> <!-- Elements should appear in the correct order -->
     <Rule Id="SA1202" Action="Error"/> <!-- Elements should be ordered by access -->

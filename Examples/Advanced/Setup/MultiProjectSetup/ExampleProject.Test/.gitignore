@@ -1,0 +1,4 @@
+# Godot 4+ specific ignores
+.godot/
+# Do not commit the symbolic linked project
+ExampleProject
