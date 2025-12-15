@@ -71,5 +71,6 @@
                  Default: SimpleName
                  FullyQualifiedName is recommended for larger projects to avoid naming conflicts -->
         <DisplayName>FullyQualifiedName</DisplayName>
+        <CaptureStdOut>true</CaptureStdOut>
     </GdUnit4>
 </RunSettings>
