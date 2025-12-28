@@ -1,4 +1,4 @@
-﻿namespace GdUnit4.Examples.Advanced.Setup.MultiProjectSetup;
+namespace GdUnit4.Examples.Advanced.Setup.MultiProjectSetup;
 
 public class Calculator
 {

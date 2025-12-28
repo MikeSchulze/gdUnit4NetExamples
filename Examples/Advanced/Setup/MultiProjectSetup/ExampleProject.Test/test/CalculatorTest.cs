@@ -1,4 +1,4 @@
-﻿namespace GdUnit4.Examples.Advanced.Setup.MultiProjectSetup.Test;
+namespace GdUnit4.Examples.Advanced.Setup.MultiProjectSetup.Test;
 
 using static Assertions;
 
