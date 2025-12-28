@@ -132,7 +132,6 @@ Advanced testing patterns and complex scenarios:
 | Level        | Focus                   | Examples                                                                                         |
 |--------------|-------------------------|--------------------------------------------------------------------------------------------------|
 | **Basics**   | Learning fundamentals   | Simple assertions, basic setup                                                                   |
-| **Advanced** | Professional techniques | Configuration management, static analysis, complex testing scenarios                             |
 | **Advanced** | Professional techniques | Multi-project architecture, configuration management, static analysis, complex testing scenarios |
 
 ## When to Use Advanced Techniques
