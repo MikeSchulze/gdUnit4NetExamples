@@ -18,7 +18,8 @@ Before diving into advanced examples, ensure you understand:
 
 1. [Global Test Settings](Setup/TestWithRunsettings/README.md) - Professional test configuration using .runsettings files
 2. [Compile-time Analysis](Setup/TestWithAnalyzers/README.md) - Static analysis and error prevention with gdUnit4.analyzers
-3. [Complex Test Scenarios](Tests/) - Advanced testing patterns and techniques
+3. [Multi-Project Testing](Setup/MultiProjectSetup/README.md) - Separate test and production projects with symlinks
+4. [Complex Test Scenarios](Tests/) - Advanced testing patterns and techniques
 
 ## Advanced Topics Structure
 
@@ -27,7 +28,8 @@ The advanced examples are organized into:
 ```shell
 ├── Setup/              # Advanced project configurations
 │   ├── TestWithRunsettings/    # Professional test settings configuration
-│   └── TestWithAnalyzers/      # Compile-time validation and code analysis 
+│   ├── TestWithAnalyzers/      # Compile-time validation and code analysis 
+│   └── MultiProjectSetup/      # Multi-project architecture with symlinks
 └── Tests/              # Complex testing scenarios and patterns
     ├── SceneTesting/           # Scene loading, lifecycle, and interaction testing
     ├── InputTesting/           # Mouse, keyboard, and user input simulation
@@ -53,6 +55,13 @@ Professional project configurations for production-ready test environments:
   - IDE integration with real-time feedback and quick fixes
   - Enforces gdUnit4Net best practices automatically
   - Improves developer productivity and code quality
+
+- **MultiProjectSetup**: Separate test and production projects architecture
+  - Clean separation between production and test code
+  - Symbolic links for resource path preservation
+  - Single assembly compilation without code duplication
+  - Cross-platform compatibility (Windows, Linux, macOS)
+  - Git-friendly setup with proper .gitignore configuration
 
 ### Tests/
 
@@ -81,6 +90,13 @@ Advanced testing patterns and complex scenarios:
   - Integration between Godot error reporting (GD.PushError) and test failures
 
 ## Key Concepts You'll Learn
+
+### Project Architecture
+
+- Multi-project solution organization for large codebases
+- Symbolic link strategies for resource sharing
+- Clean separation of concerns between test and production
+- Managing dependencies and references effectively
 
 ### Configuration Management
 
@@ -113,12 +129,21 @@ Advanced testing patterns and complex scenarios:
 
 ## Complexity Progression
 
-| Level | Focus | Examples |
-|-------|-------|----------|
-| **Basics** | Learning fundamentals | Simple assertions, basic setup |
-| **Advanced** | Professional techniques | Configuration management, static analysis, complex testing scenarios |
+| Level        | Focus                   | Examples                                                                                         |
+|--------------|-------------------------|--------------------------------------------------------------------------------------------------|
+| **Basics**   | Learning fundamentals   | Simple assertions, basic setup                                                                   |
+| **Advanced** | Professional techniques | Configuration management, static analysis, complex testing scenarios                             |
+| **Advanced** | Professional techniques | Multi-project architecture, configuration management, static analysis, complex testing scenarios |
 
 ## When to Use Advanced Techniques
+
+### Use Multi-Project Setup When
+
+- ✅ Large projects requiring extensive test coverage
+- ✅ Team projects with dedicated QA/test developers
+- ✅ Production builds where size and dependencies matter
+- ✅ Projects following enterprise architecture patterns
+- ✅ Need different build configurations for test vs production
 
 ### Use Advanced Configuration When
 
@@ -146,30 +171,43 @@ Advanced testing patterns and complex scenarios:
 
 ## Testing Patterns Overview
 
-| Pattern | Use Case | Key Benefits |
-|---------|----------|--------------|
-| **Scene Testing** | UI components, game objects | Realistic testing environment, component integration |
-| **Input Testing** | User interactions, controls | Precise input simulation, state validation |
-| **Signal Testing** | Event-driven logic, workflows | Communication pattern validation, timing verification |
-| **Exception Testing** | Error handling, robustness | Silent failure detection, comprehensive error coverage |
+| Pattern               | Use Case                      | Key Benefits                                           |
+|-----------------------|-------------------------------|--------------------------------------------------------|
+| **Scene Testing**     | UI components, game objects   | Realistic testing environment, component integration   |
+| **Input Testing**     | User interactions, controls   | Precise input simulation, state validation             |
+| **Signal Testing**    | Event-driven logic, workflows | Communication pattern validation, timing verification  |
+| **Exception Testing** | Error handling, robustness    | Silent failure detection, comprehensive error coverage |
 
 ## Setup Examples Comparison
 
-| Aspect | TestWithRunsettings | TestWithAnalyzers |
-|--------|-------------------|-------------------|
-| **Primary Focus** | Test execution configuration | Code quality and error prevention |
-| **Configuration Method** | .runsettings files | gdUnit4.analyzers package |
-| **Team Benefits** | Consistent test settings | Enforced coding standards |
-| **CI/CD Integration** | Multiple output formats | Early error detection |
-| **Developer Experience** | Professional test reports | Real-time feedback in IDE |
-| **Error Prevention** | Runtime configuration issues | Compile-time validation |
+| Aspect                   | TestWithRunsettings          | MultiProjectSetup           | TestWithAnalyzers                 |
+|--------------------------|------------------------------|-----------------------------|-----------------------------------|
+| **Primary Focus**        | Test execution configuration | Project architecture        | Code quality and error prevention |
+| **Configuration Method** | .runsettings files           | Symbolic links & .csproj    | gdUnit4.analyzers package         |
+| **Team Benefits**        | Consistent test settings     | Clean code separation       | Enforced coding standards         |
+| **CI/CD Integration**    | Multiple output formats      | Isolated test environment   | Early error detection             |
+| **Developer Experience** | Professional test reports    | Better IDE performance      | Real-time feedback in IDE         |
+| **Error Prevention**     | Runtime configuration issues | Assembly conflicts (CS0436) | Compile-time validation           |
+| **Best For**             | Team environments            | Large projects              | Code quality enforcement          |
+
+## Project Architecture Comparison
+
+| Aspect             | Single Project | Multi-Project with Copy | Multi-Project with Symlinks |
+|--------------------|----------------|-------------------------|-----------------------------|
+| **Resource Paths** | Direct access  | Path adjustments needed | Original paths preserved    |
+| **Build Time**     | Fastest        | Slower (file copying)   | Fast (symlink creation)     |
+| **Disk Usage**     | Minimal        | Duplicated resources    | Minimal (symlinks)          |
+| **Git Complexity** | Simple         | Complex (duplicates)    | Simple (symlinks ignored)   |
+| **Team Workflow**  | Mixed code     | Clean separation        | Clean separation            |
+| **Maintenance**    | Harder         | Medium                  | Easiest                     |
 
 ## Next Steps
 
 After mastering advanced techniques:
 
 - Apply learned concepts to your own projects
-- Combine .runsettings configuration with analyzer validation
+- Combine multi-project architecture with .runsettings configuration
+- Add analyzer validation to your test projects
 - Integrate scene, input, signal, and exception testing patterns
 - Explore integration with external testing tools
 - Share your testing strategies with the community

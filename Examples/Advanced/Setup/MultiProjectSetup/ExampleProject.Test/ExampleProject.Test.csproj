@@ -1,0 +1,84 @@
+﻿<!--
+    Test project for gdUnit4Net - uses Godot.NET.Sdk to integrate with Godot's build system
+    This enables testing of Godot-specific types and functionality
+-->
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+
+  <PropertyGroup>
+    <!-- Disable Central Package Management for Godot projects -->
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>GdUnit4.Examples.Advanced.Setup.MultiProjectSetup</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Ensures all dependencies are copied to output for test execution -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <!-- Identifies this as a GdUnit4 test project for test discovery -->
+    <TestFramework>GdUnit4</TestFramework>
+  </PropertyGroup>
+
+  <!--
+    ============================================================
+    IMPORTANT: Exclude symlinked src folder from compilation
+
+    The symlinked src folder is needed for Godot resource loading
+    but should NOT be compiled (types come from ProjectReference)
+    ============================================================
+  -->
+  <ItemGroup>
+    <!-- Exclude all .cs files from the symlinked src folder -->
+    <Compile Remove="src/**/*.cs"/>
+
+    <!-- Also exclude from default items to prevent auto-inclusion -->
+    <None Remove="src/**/*.cs"/>
+
+    <!-- Mark the src folder resources as content for Godot (not compiled) -->
+    <None Include="src/**/*.tscn" Condition="Exists('src')"/>
+    <None Include="src/**/*.tres" Condition="Exists('src')"/>
+    <None Include="src/**/*.gdshader" Condition="Exists('src')"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Reference to the main project being tested -->
+    <ProjectReference Include="../ExampleProject/ExampleProject.csproj"/>
+    <!-- Core .NET testing infrastructure -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1"/>
+    <!-- GdUnit4 testing framework for Godot -->
+    <PackageReference Include="gdUnit4.api" Version="5.1.0-rc3"/>
+    <!-- Test adapter to integrate GdUnit4 with .NET test runners -->
+    <PackageReference Include="gdUnit4.test.adapter" Version="3.0.0"/>
+  </ItemGroup>
+
+  <!--
+      ============================================================
+      CREATE SYMLINKS FOR GODOT RESOURCES AND PROJECT SETTINGS
+
+      Creates symlinks to:
+      1. src folder - contains all scenes, resources, and scripts
+
+      This allows tests to use the same resource paths as the
+      main project without duplication.
+      ============================================================
+    -->
+  <Target Name="CreateSymlinks" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <!-- Define source and target paths for both symlinks -->
+      <SrcSource>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/../ExampleProject/src'))</SrcSource>
+      <SrcTarget>$(MSBuildProjectDirectory)/src</SrcTarget>
+    </PropertyGroup>
+
+    <!-- Windows: Create symlinks -->
+    <Exec Command="if not exist &quot;$(SrcTarget)&quot; mklink /D &quot;$(SrcTarget)&quot; &quot;$(SrcSource)&quot;" Condition="'$(OS)' == 'Windows_NT'" ContinueOnError="true"/>
+
+    <!-- Unix/Linux/Mac: Create symlinks -->
+    <Exec Command="[ ! -L '$(SrcTarget)' ] &amp;&amp; ln -s '$(SrcSource)' '$(SrcTarget)' || true" Condition="'$(OS)' != 'Windows_NT'" ContinueOnError="true"/>
+
+    <!-- Log confirmation -->
+    <Message Text="Symlinks created/verified: src/" Importance="high"/>
+  </Target>
+</Project>

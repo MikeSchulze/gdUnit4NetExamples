@@ -1,0 +1,13 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+
+    <PropertyGroup>
+        <!-- Disable Central Package Management for Godot projects -->
+        <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <NullableReferenceTypes>true</NullableReferenceTypes>
+        <RootNamespace>GdUnit4.Examples.Advanced.Setup.MultiProjectSetup</RootNamespace>
+    </PropertyGroup>
+
+</Project>
