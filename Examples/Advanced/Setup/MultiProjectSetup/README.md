@@ -1,6 +1,7 @@
 # Multi-Project Test Setup with Symbolic Links
 
-An advanced example demonstrating how to test Godot projects in a multi-project solution using symbolic links to preserve resource paths and maintain clean separation between production and test code.
+An advanced example demonstrating how to test Godot projects in a multi-project solution using symbolic links to preserve resource paths
+and maintain clean separation between production and test code.
 
 ## What This Example Shows
 
@@ -34,11 +35,13 @@ This project demonstrates:
 ## Files Overview
 
 ### Main Project (ExampleProject/)
+
 - **`ExampleProject.csproj`** - Production project with Godot SDK
 - **`project.godot`** - Godot project configuration
 - **`src/`** - Source code, scenes, and resources
 
 ### Test Project (ExampleProject.Test/)
+
 - **`ExampleProject.Test.csproj`** - Test project with GdUnit4 configuration
 - **`.gitignore`** - Excludes symlinked folders from version control
 - **`test/`** - Test files and test-specific resources
@@ -106,7 +109,7 @@ src        # Symlinked folder - don't commit
 
 ## Project Structure
 
-```
+```shell
 Solution/
 ├── ExampleProject/
 │   ├── ExampleProject.csproj
@@ -142,18 +145,22 @@ Solution/
 ### Initial Setup
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository>
    cd MultiProjectSetup
    ```
 
 2. **Build the solution**
+
    ```bash
    dotnet build
    ```
+
    The symlink will be created automatically during the first build.
 
 3. **Run tests**
+
    ```bash
    cd ExampleProject.Test
    dotnet test
@@ -163,21 +170,22 @@ Solution/
 
 If symlink creation fails on Windows:
 
-**Option 1: Enable Developer Mode**
-1. Open Settings → Update & Security → For Developers
-2. Enable "Developer Mode"
-3. Rebuild the project
+- **Option 1: Enable Developer Mode**
+  1. Open Settings → Update & Security → For Developers
+  2. Enable "Developer Mode"
+  3. Rebuild the project
 
-**Option 2: Run as Administrator**
-1. Open terminal as Administrator
-2. Navigate to project directory
-3. Run `dotnet build`
+- **Option 2: Run as Administrator**
+  1. Open terminal as Administrator
+  2. Navigate to project directory
+  3. Run `dotnet build`
 
-**Option 3: Use Junction (fallback)**
-```cmd
-cd ExampleProject.Test
-mklink /J src ..\ExampleProject\src
-```
+- **Option 3: Use Junction (fallback)**
+
+  ```cmd
+  cd ExampleProject.Test
+  mklink /J src ..\ExampleProject\src
+  ```
 
 ## Resource Path Resolution
 
@@ -186,12 +194,14 @@ mklink /J src ..\ExampleProject\src
 The symlink strategy ensures resource paths work identically in both projects:
 
 **In Main Project:**
+
 ```csharp
 var scene = GD.Load<PackedScene>("res://src/scenes/MainScene.tscn");
 var icon = GD.Load<Texture2D>("res://src/assets/icon.png");
 ```
 
 **In Test Project (with symlink):**
+
 ```csharp
 // Same paths work because of the symlink!
 var scene = GD.Load<PackedScene>("res://src/scenes/MainScene.tscn");
@@ -201,7 +211,8 @@ var icon = GD.Load<Texture2D>("res://src/assets/icon.png");
 ### Why Not Link project.godot?
 
 The `project.godot` file contains project-specific settings like:
-- `project/assembly_name="ExampleProject"` - conflicts with test assembly
+
+- `project/assembly_name="ExampleProject"` - conflicts with test assembly"
 - Project-specific configurations that shouldn't affect tests
 - Test project can have its own test-specific project settings
 
@@ -250,13 +261,15 @@ dotnet test --filter "FullyQualifiedName~PlayerTest"
 ### CS0436 Warning: Type Conflicts
 
 **Problem:**
-```
+
+```shell
 warning CS0436: The type "ExampleScene" in "ExampleProject.Test\src\ExampleScene.cs" 
 conflicts with the imported type "ExampleScene" in "ExampleProject, Version=1.0.0.0"
 ```
 
 **Cause:**
-The symlinked `src` folder is being compiled by the test project, causing duplicate type definitions. Types exist in both the referenced `ExampleProject.dll` and are being compiled again from the symlinked source files.
+The symlinked `src` folder is being compiled by the test project, causing duplicate type definitions.
+Types exist in both the referenced `ExampleProject.dll` and are being compiled again from the symlinked source files.
 
 **Solution:**
 Add the following to your `ExampleProject.Test.csproj` to exclude symlinked source files from compilation:
@@ -270,6 +283,7 @@ Add the following to your `ExampleProject.Test.csproj` to exclude symlinked sour
 ```
 
 This ensures:
+
 - ✅ C# types come only from the ProjectReference (ExampleProject.dll)
 - ✅ Godot resources (.tscn, .tres) remain accessible via symlink
 - ✅ No duplicate type warnings
@@ -280,11 +294,13 @@ The symlink is used **only for resource loading**, not for code compilation.
 ### Symlink Creation Failed
 
 **Windows:**
+
 - Error: "You do not have sufficient privilege"
   - Solution: Enable Developer Mode or run as Administrator
   - Alternative: Use junction with `mklink /J` instead of `mklink /D`
 
 **Linux/macOS:**
+
 - Error: "Permission denied"
   - Solution: Check file system permissions
   - Verify source path exists
