@@ -1,5 +1,7 @@
 namespace GdUnit4.Examples.Advanced.Setup.MultiProjectSetup.Test;
 
+using System.Threading.Tasks;
+
 using Godot;
 
 using static Assertions;

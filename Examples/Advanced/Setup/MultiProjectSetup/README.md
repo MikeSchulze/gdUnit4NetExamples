@@ -62,6 +62,13 @@ This project demonstrates:
     <TestFramework>GdUnit4</TestFramework>
   </PropertyGroup>
   
+  <!-- IMPORTANT: Exclude symlinked src folder from compilation -->
+  <ItemGroup>
+    <!-- Prevent compilation of C# files from symlinked folder -->
+    <Compile Remove="src/**/*.cs" />
+    <None Remove="src/**/*.cs" />
+  </ItemGroup>
+  
   <ItemGroup>
     <!-- Reference to main project -->
     <ProjectReference Include="../ExampleProject/ExampleProject.csproj"/>
@@ -117,7 +124,7 @@ Solution/
 │   ├── src -> ../ExampleProject/src  [SYMLINK - created at build]
 │   └── test/
 │       ├── CalculatorTest.cs
-│       └── ExampleScene.cs
+│       └── ExampleSceneTest.cs
 │
 └── ExampleProject.sln
 ```
@@ -226,8 +233,6 @@ dotnet test --filter "FullyQualifiedName~PlayerTest"
 3. Tests appear in Testing sidebar
 4. Run individually or all at once
 
-#
-
 ## Comparison with Other Setups
 
 | Aspect | Single Project | Multi-Project with Copy | Multi-Project with Symlinks |
@@ -241,6 +246,36 @@ dotnet test --filter "FullyQualifiedName~PlayerTest"
 | **Maintenance** | Harder | Medium | Easiest |
 
 ## Troubleshooting
+
+### CS0436 Warning: Type Conflicts
+
+**Problem:**
+```
+warning CS0436: The type "ExampleScene" in "ExampleProject.Test\src\ExampleScene.cs" 
+conflicts with the imported type "ExampleScene" in "ExampleProject, Version=1.0.0.0"
+```
+
+**Cause:**
+The symlinked `src` folder is being compiled by the test project, causing duplicate type definitions. Types exist in both the referenced `ExampleProject.dll` and are being compiled again from the symlinked source files.
+
+**Solution:**
+Add the following to your `ExampleProject.Test.csproj` to exclude symlinked source files from compilation:
+
+```xml
+<ItemGroup>
+  <!-- Exclude all .cs files from the symlinked src folder -->
+  <Compile Remove="src/**/*.cs" />
+  <None Remove="src/**/*.cs" />
+</ItemGroup>
+```
+
+This ensures:
+- ✅ C# types come only from the ProjectReference (ExampleProject.dll)
+- ✅ Godot resources (.tscn, .tres) remain accessible via symlink
+- ✅ No duplicate type warnings
+- ✅ Clean compilation without conflicts
+
+The symlink is used **only for resource loading**, not for code compilation.
 
 ### Symlink Creation Failed
 
@@ -282,7 +317,7 @@ dotnet test --filter "FullyQualifiedName~PlayerTest"
 4. **Parallel Safety**: Ensure tests can run in parallel
 5. **Resource Loading**: Test resource paths early in development
 6. **Documentation**: Document any special setup requirements
-
+7. **Exclude Source from Compilation**: Always exclude symlinked .cs files to prevent CS0436 warnings
 
 ## Additional Resources
 
