@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dh47ww5q50fy4"]
 
-[ext_resource type="Script" uid="uid://jn5ci7jockqq" path="res://ExampleProject/src/ExampleScene.cs" id="1_nurgx"]
-[ext_resource type="PackedScene" uid="uid://bp0bevxrg0bqs" path="res://ExampleProject/src/scenes/LabelScene.tscn" id="2_1t80e"]
+[ext_resource type="Script" uid="uid://b17ul8t72xkt0" path="res://src/ExampleScene.cs" id="1_nurgx"]
+[ext_resource type="PackedScene" uid="uid://bp0bevxrg0bqs" path="res://src/scenes/LabelScene.tscn" id="2_1t80e"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_tsd1n"]
 

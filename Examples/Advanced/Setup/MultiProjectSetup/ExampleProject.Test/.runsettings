@@ -29,7 +29,7 @@
         <!-- Environment variables for test execution -->
         <!-- Alternative to setting GODOT_BIN in system environment -->
         <EnvironmentVariables>
-            <GODOT_BIN>D:\development\Godot_v4.5-stable_mono_win64\Godot_v4.5-stable_mono_win64.exe</GODOT_BIN>
+            <GODOT_BIN>D:\development\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64.exe</GODOT_BIN>
         </EnvironmentVariables>
     </RunConfiguration>
 
