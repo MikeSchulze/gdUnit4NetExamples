@@ -1,7 +1,5 @@
 namespace GdUnit4.Examples.Advanced.Setup.MultiProjectSetup.Test;
 
-using System.Threading.Tasks;
-
 using Godot;
 
 using static Assertions;
@@ -22,6 +20,12 @@ public class ExampleSceneTest
 
         // verify
         AssertThat(runner).IsNotNull();
-        AssertThat(runner.Scene()).IsNotNull();
+        var current = runner.Scene();
+        AssertThat(current)
+            .IsNotNull()
+            .IsInstanceOf<ExampleScene>();
+
+        var scene = current as ExampleScene;
+        AssertThat(scene?.GetState()).IsEqual("_Ready");
     }
 }

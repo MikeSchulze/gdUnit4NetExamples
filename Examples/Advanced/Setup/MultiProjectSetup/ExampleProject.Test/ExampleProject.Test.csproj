@@ -1,8 +1,9 @@
 ﻿<!--
-    Test project for gdUnit4Net - uses Godot.NET.Sdk to integrate with Godot's build system
-    This enables testing of Godot-specific types and functionality
+    Test project for gdUnit4Net - Multi-Project Setup
+    Uses symbolic links to share source code between main and test projects
+    without duplicating files or using ProjectReference
 -->
-<Project Sdk="Godot.NET.Sdk/4.5.1">
+<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CreateSymlinks">
 
   <PropertyGroup>
     <!-- Disable Central Package Management for Godot projects -->
@@ -22,30 +23,7 @@
     <TestFramework>GdUnit4</TestFramework>
   </PropertyGroup>
 
-  <!--
-    ============================================================
-    IMPORTANT: Exclude symlinked src folder from compilation
-
-    The symlinked src folder is needed for Godot resource loading
-    but should NOT be compiled (types come from ProjectReference)
-    ============================================================
-  -->
   <ItemGroup>
-    <!-- Exclude all .cs files from the symlinked src folder -->
-    <Compile Remove="src/**/*.cs"/>
-
-    <!-- Also exclude from default items to prevent auto-inclusion -->
-    <None Remove="src/**/*.cs"/>
-
-    <!-- Mark the src folder resources as content for Godot (not compiled) -->
-    <None Include="src/**/*.tscn" Condition="Exists('src')"/>
-    <None Include="src/**/*.tres" Condition="Exists('src')"/>
-    <None Include="src/**/*.gdshader" Condition="Exists('src')"/>
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- Reference to the main project being tested -->
-    <ProjectReference Include="../ExampleProject/ExampleProject.csproj"/>
     <!-- Core .NET testing infrastructure -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1"/>
     <!-- GdUnit4 testing framework for Godot -->
@@ -55,17 +33,24 @@
   </ItemGroup>
 
   <!--
-      ============================================================
-      CREATE SYMLINKS FOR GODOT RESOURCES AND PROJECT SETTINGS
+    ============================================================
+    SYMBOLIC LINK CREATION (Runs before MSBuild evaluation)
 
-      Creates symlinks to:
-      1. src folder - contains all scenes, resources, and scripts
+    IMPORTANT: Uses InitialTargets to ensure symlink exists
+    before MSBuild scans for files to compile.
 
-      This allows tests to use the same resource paths as the
-      main project without duplication.
-      ============================================================
-    -->
-  <Target Name="CreateSymlinks" BeforeTargets="BeforeBuild">
+    Creates symlink to the main project's src folder containing:
+    - All C# source files (compiled into this test assembly)
+    - All Godot resources (.tscn, .tres, etc.)
+
+    Benefits:
+    - No ProjectReference needed (avoids CS0436 warnings)
+    - Same resource paths as main project
+    - Single assembly compilation
+    - Works in CI/CD environments
+    ============================================================
+  -->
+  <Target Name="CreateSymlinks">
     <PropertyGroup>
       <!-- Define source and target paths for both symlinks -->
       <SrcSource>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/../ExampleProject/src'))</SrcSource>
@@ -73,12 +58,20 @@
     </PropertyGroup>
 
     <!-- Windows: Create symlinks -->
-    <Exec Command="if not exist &quot;$(SrcTarget)&quot; mklink /D &quot;$(SrcTarget)&quot; &quot;$(SrcSource)&quot;" Condition="'$(OS)' == 'Windows_NT'" ContinueOnError="true"/>
+    <Exec Command="if not exist &quot;$(SrcTarget)&quot; mklink /D &quot;$(SrcTarget)&quot; &quot;$(SrcSource)&quot;"
+          Condition="'$(OS)' == 'Windows_NT'"
+          ContinueOnError="true"/>
 
     <!-- Unix/Linux/Mac: Create symlinks -->
-    <Exec Command="[ ! -L '$(SrcTarget)' ] &amp;&amp; ln -s '$(SrcSource)' '$(SrcTarget)' || true" Condition="'$(OS)' != 'Windows_NT'" ContinueOnError="true"/>
+    <Exec Command="[ ! -L '$(SrcTarget)' ] &amp;&amp; ln -s '$(SrcSource)' '$(SrcTarget)' || true"
+          Condition="'$(OS)' != 'Windows_NT'"
+          ContinueOnError="true"/>
 
+    <!-- Verify symlink exists and is accessible -->
+    <Error Condition="!Exists('$(SrcTarget)')"
+           Text="Failed to create symlink at $(SrcTarget). On Windows, try running as Administrator or enabling Developer Mode."/>
+    
     <!-- Log confirmation -->
-    <Message Text="Symlinks created/verified: src/" Importance="high"/>
+    <Message Text="✓ Symlink verified: $(SrcTarget) -> $(SrcSource)" Importance="high"/>
   </Target>
 </Project>

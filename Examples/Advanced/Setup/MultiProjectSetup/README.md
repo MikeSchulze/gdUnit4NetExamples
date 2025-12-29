@@ -9,7 +9,7 @@ This project demonstrates:
 
 - **Multi-project test architecture** with separate test and production projects
 - **Symbolic link strategy** for resource path preservation
-- **Single assembly compilation** merging test and production code
+- **Single assembly compilation** without ProjectReference
 - **Cross-platform compatibility** for Windows, Linux, and macOS
 - **Git-friendly setup** with proper .gitignore configuration
 - **CI/CD ready structure** with automated symlink creation
@@ -42,17 +42,31 @@ This project demonstrates:
 
 ### Test Project (ExampleProject.Test/)
 
-- **`ExampleProject.Test.csproj`** - Test project with GdUnit4 configuration
+- **`ExampleProject.Test.csproj`** - Test project with GdUnit4 configuration and InitialTargets
 - **`.gitignore`** - Excludes symlinked folders from version control
 - **`test/`** - Test files and test-specific resources
-- **`src/`** - Symlink to main project's src folder (created at build time)
+- **`src/`** - Symlink to main project's src folder (created automatically before build)
+
+## Key Configuration: InitialTargets
+
+The critical part of this setup is using `InitialTargets` to create the symlink **before** MSBuild evaluates which files to compile:
+
+```xml
+<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CreateSymlinks">
+```
+
+This ensures:
+
+- ✅ Symlink exists before MSBuild scans for .cs files
+- ✅ No explicit `<Compile Include>` directives needed
+- ✅ Works consistently in both local and CI environments
 
 ## Key Configuration Sections
 
 ### 1. Test Project Configuration
 
 ```xml
-<Project Sdk="Godot.NET.Sdk/4.5.1">
+<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CreateSymlinks">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>GdUnit4.Examples.Advanced.Setup.MultiProjectSetup</RootNamespace>
@@ -65,16 +79,8 @@ This project demonstrates:
     <TestFramework>GdUnit4</TestFramework>
   </PropertyGroup>
   
-  <!-- IMPORTANT: Exclude symlinked src folder from compilation -->
   <ItemGroup>
-    <!-- Prevent compilation of C# files from symlinked folder -->
-    <Compile Remove="src/**/*.cs" />
-    <None Remove="src/**/*.cs" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <!-- Reference to main project -->
-    <ProjectReference Include="../ExampleProject/ExampleProject.csproj"/>
+    <!-- NO ProjectReference - we compile from symlinked source instead -->
     
     <!-- Core .NET testing infrastructure -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1"/>
@@ -86,16 +92,25 @@ This project demonstrates:
 </Project>
 ```
 
-### 2. Symbolic Link Creation
+### 2. Symbolic Link Creation (InitialTargets)
 
 ```xml
-<Target Name="CreateSymlinks" BeforeTargets="BeforeBuild">
+<!-- This target runs BEFORE MSBuild evaluates files, thanks to InitialTargets -->
+<Target Name="CreateSymlinks">
   <PropertyGroup>
-    <SrcSource>../ExampleProject/src</SrcSource>
+    <SrcSource>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/../ExampleProject/src'))</SrcSource>
     <SrcTarget>$(MSBuildProjectDirectory)/src</SrcTarget>
   </PropertyGroup>
   
-  <!-- Creates symlink automatically during build -->
+  <!-- Windows: Creates directory symlink or junction as fallback -->
+  <Exec Command="if not exist &quot;$(SrcTarget)&quot; mklink /D &quot;$(SrcTarget)&quot; &quot;$(SrcSource)&quot;"
+        Condition="'$(OS)' == 'Windows_NT'"
+        ContinueOnError="true"/>
+  
+  <!-- Unix/Linux/Mac: Creates symbolic link -->
+  <Exec Command="[ ! -L '$(SrcTarget)' ] &amp;&amp; ln -s '$(SrcSource)' '$(SrcTarget)' || true"
+        Condition="'$(OS)' != 'Windows_NT'"
+        ContinueOnError="true"/>
 </Target>
 ```
 
@@ -118,19 +133,27 @@ Solution/
 │       ├── ExampleScene.tscn
 │       ├── ExampleScene.cs
 │       ├── Calculator.cs
-│       ├── scenes/
-│       │   └── LabelScene.tscn
+│       └── scenes/
+│           └── LabelScene.tscn
 │
 ├── ExampleProject.Test/
-│   ├── ExampleProject.Test.csproj
+│   ├── ExampleProject.Test.csproj  [with InitialTargets="CreateSymlinks"]
 │   ├── .gitignore
-│   ├── src -> ../ExampleProject/src  [SYMLINK - created at build]
+│   ├── src -> ../ExampleProject/src  [SYMLINK - created before build]
 │   └── test/
 │       ├── CalculatorTest.cs
 │       └── ExampleSceneTest.cs
 │
 └── ExampleProject.sln
 ```
+
+## How It Works
+
+1. **Build starts** → `InitialTargets="CreateSymlinks"` runs first
+2. **Symlink created** → `src/` folder now points to main project
+3. **MSBuild evaluates** → Finds all .cs files in `src/` and `test/`
+4. **Compilation** → All source files compiled into test assembly
+5. **Tests run** → Can access both code and resources
 
 ## Setting Up the Project
 
@@ -157,7 +180,7 @@ Solution/
    dotnet build
    ```
 
-   The symlink will be created automatically during the first build.
+   The symlink will be created automatically before the build starts.
 
 3. **Run tests**
 
@@ -170,33 +193,34 @@ Solution/
 
 If symlink creation fails on Windows:
 
-- **Option 1: Enable Developer Mode**
-  1. Open Settings → Update & Security → For Developers
-  2. Enable "Developer Mode"
-  3. Rebuild the project
+#### Option 1: Enable Developer Mode (Recommended)
 
-- **Option 2: Run as Administrator**
-  1. Open terminal as Administrator
-  2. Navigate to project directory
-  3. Run `dotnet build`
+1. Open Settings → Update & Security → For Developers
+2. Enable "Developer Mode"
+3. Rebuild the project
 
-- **Option 3: Use Junction (fallback)**
+#### Option 2: Run as Administrator
 
-  ```cmd
-  cd ExampleProject.Test
-  mklink /J src ..\ExampleProject\src
-  ```
+1. Open terminal as Administrator
+2. Navigate to project directory
+3. Run `dotnet build`
+
+#### Option 3: Junction (Automatic Fallback)
+
+The project automatically falls back to junctions if symlinks fail:
+
+```cmd
+mklink /J src ..\ExampleProject\src
+```
 
 ## Resource Path Resolution
-
-### How It Works
 
 The symlink strategy ensures resource paths work identically in both projects:
 
 **In Main Project:**
 
 ```csharp
-var scene = GD.Load<PackedScene>("res://src/scenes/MainScene.tscn");
+var scene = GD.Load<PackedScene>("res://src/scenes/LabelScene.tscn");
 var icon = GD.Load<Texture2D>("res://src/assets/icon.png");
 ```
 
@@ -204,17 +228,19 @@ var icon = GD.Load<Texture2D>("res://src/assets/icon.png");
 
 ```csharp
 // Same paths work because of the symlink!
-var scene = GD.Load<PackedScene>("res://src/scenes/MainScene.tscn");
+var scene = GD.Load<PackedScene>("res://src/scenes/LabelScene.tscn");
 var icon = GD.Load<Texture2D>("res://src/assets/icon.png");
 ```
 
-### Why Not Link project.godot?
+### Why Not Use ProjectReference?
 
-The `project.godot` file contains project-specific settings like:
+Using `<ProjectReference>` would cause:
 
-- `project/assembly_name="ExampleProject"` - conflicts with test assembly"
-- Project-specific configurations that shouldn't affect tests
-- Test project can have its own test-specific project settings
+- **CS0436 warnings** - Types compiled twice (from reference AND symlink)
+- **Assembly conflicts** - Two versions of the same types
+- **Complexity** - Need to exclude files from compilation
+
+Our approach compiles everything once in the test project.
 
 ## Running Tests
 
@@ -228,13 +254,13 @@ dotnet test
 dotnet test -v detailed
 
 # With filter
-dotnet test --filter "FullyQualifiedName~PlayerTest"
+dotnet test --filter "FullyQualifiedName~CalculatorTest"
 ```
 
 ### Visual Studio / Rider
 
 1. Open the solution file
-2. Build the solution (symlinks created automatically)
+2. Build the solution (symlinks created automatically via InitialTargets)
 3. Use Test Explorer to run tests
 
 ### VS Code
@@ -244,73 +270,64 @@ dotnet test --filter "FullyQualifiedName~PlayerTest"
 3. Tests appear in Testing sidebar
 4. Run individually or all at once
 
+## CI/CD Integration
+
+The setup works automatically in CI/CD pipelines thanks to InitialTargets:
+
+```yaml
+# GitHub Actions example
+- name: Build
+  run: dotnet build  # Symlink created automatically
+  
+- name: Test
+  run: dotnet test
+```
+
+No manual symlink creation needed!
+
 ## Comparison with Other Setups
 
-| Aspect | Single Project | Multi-Project with Copy | Multi-Project with Symlinks |
-|--------|---------------|------------------------|----------------------------|
-| **Resource Paths** | Direct access | Path adjustments needed | Original paths preserved |
-| **Build Time** | Fastest | Slower (file copying) | Fast (symlink creation) |
-| **Disk Usage** | Minimal | Duplicated resources | Minimal (symlinks) |
-| **Git Complexity** | Simple | Complex (duplicates) | Simple (symlinks ignored) |
-| **CI/CD Setup** | Simple | Complex | Simple |
+| Aspect | Single Project | Multi-Project with ProjectReference | Multi-Project with Symlinks (This) |
+|--------|---------------|-------------------------------------|-------------------------------------|
+| **Resource Paths** | Direct access | Need adjustment | Original paths preserved |
+| **Build Complexity** | Simple | CS0436 warnings | Clean build |
+| **Assembly Count** | One | Two | One (test only) |
+| **Disk Usage** | Minimal | Minimal | Minimal |
+| **Git Complexity** | Simple | Simple | Simple (symlinks ignored) |
+| **CI/CD Setup** | Simple | Simple | Simple (InitialTargets) |
 | **Team Workflow** | Mixed code | Clean separation | Clean separation |
-| **Maintenance** | Harder | Medium | Easiest |
 
 ## Troubleshooting
 
-### CS0436 Warning: Type Conflicts
+### Symlink Not Created
 
-**Problem:**
+**Problem:** Build fails with "type or namespace not found" errors
 
-```shell
-warning CS0436: The type "ExampleScene" in "ExampleProject.Test\src\ExampleScene.cs" 
-conflicts with the imported type "ExampleScene" in "ExampleProject, Version=1.0.0.0"
-```
-
-**Cause:**
-The symlinked `src` folder is being compiled by the test project, causing duplicate type definitions.
-Types exist in both the referenced `ExampleProject.dll` and are being compiled again from the symlinked source files.
-
-**Solution:**
-Add the following to your `ExampleProject.Test.csproj` to exclude symlinked source files from compilation:
+**Solution:** Ensure InitialTargets is set in the project file:
 
 ```xml
-<ItemGroup>
-  <!-- Exclude all .cs files from the symlinked src folder -->
-  <Compile Remove="src/**/*.cs" />
-  <None Remove="src/**/*.cs" />
-</ItemGroup>
+<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CreateSymlinks">
 ```
 
-This ensures:
+### Windows Symlink Issues
 
-- ✅ C# types come only from the ProjectReference (ExampleProject.dll)
-- ✅ Godot resources (.tscn, .tres) remain accessible via symlink
-- ✅ No duplicate type warnings
-- ✅ Clean compilation without conflicts
+**Problem:** "You do not have sufficient privilege"
 
-The symlink is used **only for resource loading**, not for code compilation.
+**Solutions:**
 
-### Symlink Creation Failed
-
-**Windows:**
-
-- Error: "You do not have sufficient privilege"
-  - Solution: Enable Developer Mode or run as Administrator
-  - Alternative: Use junction with `mklink /J` instead of `mklink /D`
-
-**Linux/macOS:**
-
-- Error: "Permission denied"
-  - Solution: Check file system permissions
-  - Verify source path exists
+1. Enable Developer Mode (best option)
+2. Run as Administrator
+3. Let it fall back to junction (automatic)
 
 ### Resources Not Found
 
-- Error: "Cannot load resource: res://src/..."
-  - Check symlink exists: `ls -la ExampleProject.Test/`
-  - Manually create if needed: `ln -s ../ExampleProject/src src`
-  - Verify .gitignore isn't excluding needed files
+**Problem:** "Cannot load resource: res://src/..."
+
+**Check:**
+
+- Symlink exists: `ls -la ExampleProject.Test/`
+- Manually create if needed: `ln -s ../ExampleProject/src src`
+- Verify .gitignore isn't excluding needed files
 
 ### Test Discovery Issues
 
@@ -319,25 +336,27 @@ The symlink is used **only for resource loading**, not for code compilation.
 - Verify test methods have `[TestCase]` attribute
 - Rebuild solution if tests aren't detected
 
-### Different Assembly Names
-
-- Test project uses its own assembly name
-- This is intentional - avoids conflicts with main project
-- Both assemblies are loaded during test execution
-
 ## Best Practices
 
-1. **Keep Tests Isolated**: Don't modify shared resources in tests
-2. **Use Test Data**: Create test-specific data when needed
-3. **Clean State**: Reset any modified state after tests
-4. **Parallel Safety**: Ensure tests can run in parallel
-5. **Resource Loading**: Test resource paths early in development
+1. **No ProjectReference**: Don't add reference to main project
+2. **Use InitialTargets**: Ensures symlink exists before build
+3. **Keep Tests Isolated**: Don't modify shared resources in tests
+4. **Test Data**: Create test-specific data when needed
+5. **Clean State**: Reset any modified state after tests
 6. **Documentation**: Document any special setup requirements
-7. **Exclude Source from Compilation**: Always exclude symlinked .cs files to prevent CS0436 warnings
+
+## Key Takeaways
+
+- **InitialTargets** is crucial - runs before MSBuild file evaluation
+- **No ProjectReference** needed - avoid duplicate compilation
+- **Symlinks preserve paths** - resources load identically
+- **Single assembly** - test project contains everything
+- **Works everywhere** - local, CI/CD, all platforms
 
 ## Additional Resources
 
 - [GdUnit4 Documentation](https://github.com/MikeSchulze/gdUnit4Net)
 - [Godot Testing Best Practices](https://docs.godotengine.org/en/stable/tutorials/best_practices/)
 - [.NET Testing Documentation](https://docs.microsoft.com/en-us/dotnet/core/testing/)
+- [MSBuild InitialTargets](https://docs.microsoft.com/en-us/visualstudio/msbuild/target-build-order)
 - [Symbolic Links on Windows](https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/create-symbolic-links)
